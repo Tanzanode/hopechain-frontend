@@ -1,0 +1,7 @@
+type User = record {name: text;};
+service : {
+  deposit: (float64) -> (float64);
+  getTotalCharityAmount: () -> (float64) query;
+  getTotalPrice: () -> (float64) query;
+  registerUser: (text) -> (opt User);
+}
