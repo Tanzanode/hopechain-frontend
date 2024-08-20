@@ -84,35 +84,6 @@
     display: none;
 }
 
-.nav-user-name {
-    font-size: 18px;
-    color: #171717;
-    margin-right: 20px;
-    font-weight: 600;
-}
-
-.nav-logout-button {
-    width: 100px;
-    height: 45px;
-    outline: none;
-    border: 1px solid #7a7a7a;
-    border-radius: 75px;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    background: #FF4141;
-    cursor: pointer;
-    margin-right: 20px;
-}
-
-.nav-logout-button:hover {
-    background: #ff5e5e;
-}
-
-.nav-logout-button:active {
-    background: #ff7a7a;
-}
-
 /* -------- media query---------- */
 @media(max-width:900px){
     .navbar{
@@ -178,4 +149,41 @@
     .nav-login-cart{
         gap: 10px;
     }
+}
+/* Other styles remain the same */
+
+.user-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown {
+    display: none; /* Initially hide the dropdown */
+    position: absolute;
+    top: 100%; /* Positions the dropdown right below the icon */
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px; /* Adjust as necessary */
+    border-radius: 5px; /* Optional: adds rounded corners */
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+/* Show the dropdown when hovering over the user icon container */
+.user-icon-container:hover .user-dropdown {
+    display: block;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.user-dropdown a:hover {
+    background-color: #f1f1f1;
+    cursor: pointer; /* Shows a pointer cursor */
 }

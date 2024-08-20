@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "hopechain-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,7 +14,11 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
+    "simple-cbor": "^0.4.1",
     "web-vitals": "^2.1.4"
+  },
+  "dev-Dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.20.1"
   },
   "scripts": {
     "start": "craco start",
@@ -39,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
