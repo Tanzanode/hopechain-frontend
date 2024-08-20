@@ -84,6 +84,35 @@
     display: none;
 }
 
+.nav-user-name {
+    font-size: 18px;
+    color: #171717;
+    margin-right: 20px;
+    font-weight: 600;
+}
+
+.nav-logout-button {
+    width: 100px;
+    height: 45px;
+    outline: none;
+    border: 1px solid #7a7a7a;
+    border-radius: 75px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    background: #FF4141;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.nav-logout-button:hover {
+    background: #ff5e5e;
+}
+
+.nav-logout-button:active {
+    background: #ff7a7a;
+}
+
 /* -------- media query---------- */
 @media(max-width:900px){
     .navbar{

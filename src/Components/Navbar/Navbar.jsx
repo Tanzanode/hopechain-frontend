@@ -1,42 +1,59 @@
-import React, { useContext, useRef, useState } from 'react'
-import './Navbar.css'
-import logo from '../Assets/logo.png'
-import cart_icon from '../Assets/cart_icon.png'
-import nav_dropdown from '../Assets/nav_dropdown.png'
-import { Link } from 'react-router-dom'
-import { ShopContext } from '../../Context/ShopContext'
+import React, { useContext, useRef, useState } from 'react';
+import './Navbar.css';
+import logo from '../Assets/logo.png';
+import cart_icon from '../Assets/cart_icon.png';
+import nav_dropdown from '../Assets/nav_dropdown.png';
+import { Link } from 'react-router-dom';
+import { ShopContext } from '../../Context/ShopContext';
 
-const Navbar = () => {
+const Navbar = ({ isAuthenticated, userName, onLogout, currency, onCurrencyChange }) => {
+  const [menu, setMenu] = useState("shop");
+  const { getTotalCartItems } = useContext(ShopContext);
+  const menuRef = useRef();
 
-    const [menu,setMenu] = useState("shop");
-    const {getTotalCartItems}= useContext(ShopContext);
-    const menuRef = useRef();
-
-    const dropdown_toggle = (e) => {
-      menuRef.current.classList.toggle('nav-menu-visible');
-      e.target.classList.toggle('open');
-    }
+  const dropdown_toggle = (e) => {
+    menuRef.current.classList.toggle('nav-menu-visible');
+    e.target.classList.toggle('open');
+  };
 
   return (
     <div className='navbar'>
-      <Link to='/' onClick={()=>{setMenu("shop")}} className="nav-logo">
-        <img src={logo} alt="" />
-        <p>HOPE CHAIN</p>
+      <Link to='/' onClick={() => { setMenu("shop") }} className="nav-logo">
+        <img src={logo} alt="site logo image" />
+        <p>HopeChain</p>
       </Link>
       <img onClick={dropdown_toggle} className='nav-dropdown' src={nav_dropdown} alt="" />
       <ul ref={menuRef} className="nav-menu">
-        <li onClick={()=>{setMenu("shop")}}><Link to='/'>Shop</Link>{menu==="shop"?<hr/>:<></>}</li>
-        <li onClick={()=>{setMenu("mens")}}><Link to='/mens'>Men</Link>{menu==="mens"?<hr/>:<></>}</li>
-        <li onClick={()=>{setMenu("womens")}}><Link to="womens">Women</Link>{menu==="womens"?<hr/>:<></>}</li>
-        <li onClick={()=>{setMenu("kids")}}><Link to='/kids'>Kids</Link>{menu==="kids"?<hr/>:<></>}</li>
+        <li onClick={() => { setMenu("shop") }}><Link to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}</li>
+        <li onClick={() => { setMenu("mens") }}><Link to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}</li>
+        <li onClick={() => { setMenu("womens") }}><Link to="womens">Women</Link>{menu === "womens" ? <hr /> : <></>}</li>
+        <li onClick={() => { setMenu("kids") }}><Link to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
       </ul>
+
+      {/* Add currency selector */}
+      <select className="nav-currency-selector" value={currency} onChange={onCurrencyChange}>
+        <option value="USD">USD</option>
+        <option value="GBP">GBP</option>
+        <option value="EUR">EUR</option>
+        <option value="BTC">Bitcoin</option>
+        <option value="ETH">Ether</option>
+        <option value="ICP">ICP</option>
+      </select>
+
       <div className="nav-login-cart">
-        <Link to='/login'><button>Login</button></Link>
+        {isAuthenticated ? (
+          <>
+            <span>Welcome, {userName}!</span>
+            <button onClick={onLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to='/login'><button>Login</button></Link>
+        )}
         <Link to='/cart'><img src={cart_icon} alt="" /></Link>
         <div className="nav-cart-count">{getTotalCartItems()}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

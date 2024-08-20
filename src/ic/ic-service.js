@@ -13,4 +13,36 @@ const hopechain_engine = Actor.createActor(hopechain_engine_idl, {
   canisterId: hopechain_engine_id,
 });
 
-export default hopechain_engine;
+console.log("Available methods:", Object.keys(hopechain_engine));
+
+export const registerUser = async (name) => {
+  try {
+    const user = await hopechain_engine.registerUser(name);
+    if (user) {
+      console.log('User registered:', user);
+      return user
+    } else {
+      console.log('User already exists');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
+};
+
+export const getUser = async (name) => {
+  try {
+    if (typeof hopechain_engine.getUser === 'function') {
+      const user = await hopechain_engine.getUser(name);
+      console.log('User from getUser:', user); // Debugging line
+      return user; // Ensure this is returning null or undefined if not found
+    } else {
+      throw new Error('getUser method not found on hopechain_engine');
+    }
+  } catch (error) {
+    console.error('Error checking user:', error);
+    throw error;
+  }
+};
+
