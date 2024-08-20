@@ -1,0 +1,122 @@
+.sellermode {
+  padding: 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+  gap: 70px;
+  margin: 60px auto 0 auto;
+}
+
+.sellermode h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+.sellermode-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sellermode-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.sellermode-row label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.sellermode-row input,
+.sellermode-row textarea {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.sellermode-row input:focus,
+.sellermode-row textarea:focus {
+  border-color: #007bff;
+}
+
+.sellermode-row textarea {
+  resize: vertical;
+}
+
+.sellermode-image-preview {
+  margin-top: 15px;
+  max-width: 100%;
+  max-height: 250px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.sellermode-submit-btn {
+  padding: 12px 20px;
+  background-color: #E94E44 ;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.sellermode-submit-btn:hover {
+  background-color: #E94E44 ;
+}
+.sellermode {
+  padding: 20px;
+}
+
+.sellermode-form {
+  margin-bottom: 20px;
+}
+
+.sellermode-product-list {
+  margin-top: 20px;
+}
+
+.sellermode-product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sellermode-product-table th, .sellermode-product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.sellermode-product-thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.sellermode-edit-btn, .sellermode-remove-btn {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.sellermode-edit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sellermode-remove-btn {
+  background-color: #f44336;
+  color: white;
+}

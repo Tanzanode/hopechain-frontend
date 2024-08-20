@@ -8,6 +8,7 @@ import Product from './Pages/Product';
 import Cart from './Pages/Cart';
 import LoginSignup from './Pages/LoginSignup';
 import Login from './Pages/Login';
+import Seller from './Pages/Seller';
 import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
@@ -63,6 +64,7 @@ function App() {
           <Route path='/cart' element={<Cart currency={currency} />} />
           <Route path='/login' element={<Login onLogin={handleLogin} />} />
           <Route path='/signup' element={<LoginSignup />} />
+          <Route path='/seller' element={<Seller />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -5,14 +5,8 @@ module.exports = {
         if (rule.use) {
           rule.use.forEach((use) => {
             if (use.loader && use.loader.includes("source-map-loader")) {
-              use.options = {
-                filterSourceMappingUrl: (url, resourcePath) => {
-                  if (resourcePath.includes("simple-cbor")) {
-                    return false; // Ignore source maps for simple-cbor
-                  }
-                  return true;
-                },
-              };
+              // Exclude the simple-cbor package from source map processing
+              rule.exclude = (rule.exclude || []).concat(/node_modules\/simple-cbor/);
             }
           });
         }
