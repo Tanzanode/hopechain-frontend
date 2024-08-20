@@ -4,6 +4,7 @@ export const idlFactory = ({ IDL }) => {
     'deposit' : IDL.Func([IDL.Float64], [IDL.Float64], []),
     'getTotalCharityAmount' : IDL.Func([], [IDL.Float64], ['query']),
     'getTotalPrice' : IDL.Func([], [IDL.Float64], ['query']),
+    'getUser' : IDL.Func([IDL.Text], [IDL.Opt(User)], ['query']),
     'registerUser' : IDL.Func([IDL.Text], [IDL.Opt(User)], []),
   });
 };
