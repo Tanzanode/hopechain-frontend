@@ -6,7 +6,7 @@ import nav_dropdown from '../Assets/nav_dropdown.png';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/ShopContext';
 
-const Navbar = ({ isAuthenticated, userName, onLogout }) => {
+const Navbar = ({ isAuthenticated, userName, onLogout, currency, onCurrencyChange }) => {
   const [menu, setMenu] = useState("shop");
   const { getTotalCartItems } = useContext(ShopContext);
   const menuRef = useRef();
@@ -29,6 +29,17 @@ const Navbar = ({ isAuthenticated, userName, onLogout }) => {
         <li onClick={() => { setMenu("womens") }}><Link to="womens">Women</Link>{menu === "womens" ? <hr /> : <></>}</li>
         <li onClick={() => { setMenu("kids") }}><Link to='/kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
       </ul>
+
+      {/* Add currency selector */}
+      <select className="nav-currency-selector" value={currency} onChange={onCurrencyChange}>
+        <option value="USD">USD</option>
+        <option value="GBP">GBP</option>
+        <option value="EUR">EUR</option>
+        <option value="BTC">Bitcoin</option>
+        <option value="ETH">Ether</option>
+        <option value="ICP">ICP</option>
+      </select>
+
       <div className="nav-login-cart">
         {isAuthenticated ? (
           <>
