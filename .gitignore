@@ -1,3 +1,19 @@
-.dfx
-.mops
+# Dependency directories
 node_modules/
+
+# Ignore DFX artifacts
+/.dfx
+
+# Ignore Mops packages
+/.mops
+
+# Build directories
+/build
+/dist
+
+# Environment variables
+/.env
+
+# Editor/IDE specific files
+*.log
+.DS_Store
