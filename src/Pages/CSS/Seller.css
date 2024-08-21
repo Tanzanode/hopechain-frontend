@@ -1,26 +1,36 @@
+/* Basic resets */
+body, h1, h2, h3, p, ul, ol, form, fieldset, legend, input, textarea, select, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* Overall Seller Mode Container */
 .sellermode {
-  padding: 40px;
-  max-width: 700px;
-  margin: 0 auto;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  font-family: 'Arial', sans-serif;
-  gap: 70px;
-  margin: 60px auto 0 auto;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sellermode h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 28px;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
   color: #333;
+  text-align: center;
 }
 
+/* Form Styles */
 .sellermode-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .sellermode-row {
@@ -28,95 +38,174 @@
   flex-direction: column;
 }
 
+.sellermode-row.inline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .sellermode-row label {
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
   color: #555;
 }
 
-.sellermode-row input,
-.sellermode-row textarea {
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+.sellermode-row .required {
+  color: #e74c3c;
+}
+
+.sellermode-row input[type="text"],
+.sellermode-row input[type="number"],
+.sellermode-row input[type="date"],
+.sellermode-row textarea,
+.sellermode-row select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
   transition: border-color 0.3s ease;
 }
 
-.sellermode-row input:focus,
-.sellermode-row textarea:focus {
-  border-color: #007bff;
+.sellermode-row input[type="text"]:focus,
+.sellermode-row input[type="number"]:focus,
+.sellermode-row input[type="date"]:focus,
+.sellermode-row textarea:focus,
+.sellermode-row select:focus {
+  border-color: #3498db;
+  outline: none;
 }
 
 .sellermode-row textarea {
   resize: vertical;
 }
 
-.sellermode-image-preview {
-  margin-top: 15px;
-  max-width: 100%;
-  max-height: 250px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.sellermode-row small {
+  font-size: 0.875rem;
+  color: #999;
 }
 
+.sellermode-image-preview {
+  margin-top: 1rem;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit Button */
 .sellermode-submit-btn {
-  padding: 12px 20px;
-  background-color: #E94E44 ;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
   color: #fff;
+  background-color: #3498db;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 18px;
-  text-align: center;
   transition: background-color 0.3s ease;
+  align-self: center;
+  width: fit-content;
 }
 
 .sellermode-submit-btn:hover {
-  background-color: #E94E44 ;
-}
-.sellermode {
-  padding: 20px;
+  background-color: #ff4141;
 }
 
-.sellermode-form {
-  margin-bottom: 20px;
-}
-
+/* Product List Table */
 .sellermode-product-list {
-  margin-top: 20px;
+  margin-top: 2rem;
+}
+
+.sellermode-product-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
 }
 
 .sellermode-product-table {
   width: 100%;
   border-collapse: collapse;
+  text-align: left;
 }
 
-.sellermode-product-table th, .sellermode-product-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+.sellermode-product-table th, 
+.sellermode-product-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.sellermode-product-table th {
+  background-color: #f4f4f4;
+  color: #555;
+  font-weight: 600;
 }
 
 .sellermode-product-thumbnail {
   width: 50px;
   height: 50px;
   object-fit: cover;
+  border-radius: 4px;
 }
 
-.sellermode-edit-btn, .sellermode-remove-btn {
-  margin: 0 5px;
-  padding: 5px 10px;
+/* Action Buttons */
+.sellermode-edit-btn,
+.sellermode-remove-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .sellermode-edit-btn {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #f39c12;
+  color: #fff;
+  margin-right: 0.5rem;
+}
+
+.sellermode-edit-btn:hover {
+  background-color: #e67e22;
 }
 
 .sellermode-remove-btn {
-  background-color: #f44336;
-  color: white;
+  background-color: #e74c3c;
+  color: #fff;
 }
+
+.sellermode-remove-btn:hover {
+  background-color: #c0392b;
+}
+
+.success-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 0.25rem;
+}
+
+.error-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 0.25rem;
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .sellermode-row.inline {
+    flex-direction: column;
+  }
+}
+

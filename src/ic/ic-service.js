@@ -31,6 +31,7 @@ export const registerUser = async (name) => {
   }
 };
 
+
 export const getUser = async (name) => {
   try {
     if (typeof hopechain_engine.getUser === 'function') {
