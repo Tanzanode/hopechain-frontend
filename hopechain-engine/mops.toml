@@ -1,4 +1,0 @@
-[dependencies]
-base = "0.12.1"
-map = "9.0.1"
-motoko-base = "https://github.com/dfinity/motoko-base#master@e1b5bba80a9ef1faacfcffa3e8f64ab84d60c570"
