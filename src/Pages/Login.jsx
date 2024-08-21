@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CSS/LoginSignup.css';
-import { getUser } from '../ic/ic-service';
+import { getUser } from '../ic/ic-service'; // Service to interact with the Motoko backend
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
@@ -21,8 +21,8 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async () => {
     if (validateName(name)) {
       try {
-        const user = await getUser(name);
-        if (user) { // Ensure user exists
+        const user = await getUser(name); // Fetch the user from the backend by name
+        if (user) { // If user exists
           onLogin(name);
           navigate('/'); // Redirect to the home page
         } else {
@@ -35,7 +35,6 @@ const Login = ({ onLogin }) => {
       setError('Please enter a valid full name (letters only).');
     }
   };
-  
 
   return (
     <div className='loginsignup'>

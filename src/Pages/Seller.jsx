@@ -1,50 +1,104 @@
 import React, { useState } from 'react';
+import { addProduct } from '../ic/productService';
 import './CSS/Seller.css';
 
 const SellerMode = () => {
   const [productImage, setProductImage] = useState(null);
   const [productName, setProductName] = useState('');
   const [shortDescription, setShortDescription] = useState('');
+  const [longDescription, setLongDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [currency, setCurrency] = useState('ICP');
+  const [inventory, setInventory] = useState('');
+  const [dateAdded, setDateAdded] = useState(new Date().toISOString().split('T')[0]); // Default to current date
   const [products, setProducts] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [shortDescCharCount, setShortDescCharCount] = useState(250);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleImageUpload = (event) => {
     setProductImage(URL.createObjectURL(event.target.files[0]));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleShortDescriptionChange = (event) => {
+    const value = event.target.value;
+    if (value.length <= 250) {
+      setShortDescription(value);
+      setShortDescCharCount(250 - value.length);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    // Clear previous messages
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    // Validate form fields
+    if (!productName || !price || !inventory) {
+      setErrorMessage('Please fill in all required fields.');
+      return;
+    }
+    if (shortDescription.length > 250) {
+      setErrorMessage('Short description exceeds the maximum allowed length of 250 characters.');
+      return;
+    }
+
     const newProduct = {
       productName,
       shortDescription,
+      longDescription,
       price,
+      currency,
       productImage,
-      dateUploaded: new Date().toLocaleDateString(),
+      inventory,
+      dateAdded,
     };
 
-    if (editIndex !== null) {
-      const updatedProducts = [...products];
-      updatedProducts[editIndex] = newProduct;
-      setProducts(updatedProducts);
-      setEditIndex(null);
-    } else {
-      setProducts([...products, newProduct]);
-    }
+    try {
+      // Add the product to the backend
+      await addProduct(newProduct);
 
-    // Reset form
-    setProductImage(null);
-    setProductName('');
-    setShortDescription('');
-    setPrice('');
+      // Update local state (optional if you want to display it immediately)
+      if (editIndex !== null) {
+        const updatedProducts = [...products];
+        updatedProducts[editIndex] = newProduct;
+        setProducts(updatedProducts);
+        setEditIndex(null);
+      } else {
+        setProducts([...products, newProduct]);
+      }
+
+      // Reset form
+      setProductImage(null);
+      setProductName('');
+      setShortDescription('');
+      setLongDescription('');
+      setPrice('');
+      setCurrency('ICP');
+      setInventory('');
+      setDateAdded(new Date().toISOString().split('T')[0]);
+      setShortDescCharCount(250);
+
+      // Set success message
+      setSuccessMessage('Product added successfully!');
+    } catch (error) {
+      setErrorMessage('Failed to add product. Please try again.');
+    }
   };
 
   const handleEditProduct = (index) => {
     const productToEdit = products[index];
     setProductName(productToEdit.productName);
     setShortDescription(productToEdit.shortDescription);
+    setLongDescription(productToEdit.longDescription);
     setPrice(productToEdit.price);
+    setCurrency(productToEdit.currency);
     setProductImage(productToEdit.productImage);
+    setInventory(productToEdit.inventory);
+    setDateAdded(productToEdit.dateAdded);
     setEditIndex(index);
   };
 
@@ -57,6 +111,9 @@ const SellerMode = () => {
     <div className='sellermode'>
       <h1>Seller Mode</h1>
 
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       <form className='sellermode-form' onSubmit={handleFormSubmit}>
         <div className='sellermode-row'>
           <label htmlFor='productImage'>Product Image</label>
@@ -64,40 +121,88 @@ const SellerMode = () => {
           {productImage && <img src={productImage} alt='Product Preview' className='sellermode-image-preview' />}
         </div>
         <div className='sellermode-row'>
-          <label htmlFor='productName'>Product Name</label>
+          <label htmlFor='productName'>Product Name <span className="required">*</span></label>
           <input
             type='text'
             id='productName'
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             placeholder='Enter product name'
+            required
           />
         </div>
         <div className='sellermode-row'>
-          <label htmlFor='shortDescription'>Short Description</label>
+          <label htmlFor='shortDescription'>Short Description <span className="required">*</span></label>
           <textarea
             id='shortDescription'
             value={shortDescription}
-            onChange={(e) => setShortDescription(e.target.value)}
-            placeholder='Enter short description'
+            onChange={handleShortDescriptionChange}
+            placeholder='Enter short description (max 250 characters)'
             rows='2'
+            required
+          />
+          <small>{shortDescCharCount} characters remaining</small>
+        </div>
+        <div className='sellermode-row'>
+          <label htmlFor='longDescription'>Long Description</label>
+          <textarea
+            id='longDescription'
+            value={longDescription}
+            onChange={(e) => setLongDescription(e.target.value)}
+            placeholder='Enter detailed description'
+            rows='5'
+          />
+        </div>
+        <div className='sellermode-row inline'>
+          <div className='inline-item'>
+            <label htmlFor='price'>Price <span className="required">*</span></label>
+            <input
+              type='number'
+              id='price'
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder='Enter price'
+              required
+            />
+          </div>
+          <div className='inline-item'>
+            <label htmlFor='currency'>Currency</label>
+            <select id='currency' value={currency} onChange={(e) => setCurrency(e.target.value)}>
+              <option value='ICP'>ICP</option>
+              <option value='BTC'>BTC</option>
+              <option value='ETH'>ETH</option>
+              <option value='USD'>USD</option>
+              <option value='GBP'>GBP</option>
+              <option value='EUR'>EUR</option>
+            </select>
+          </div>
+        </div>
+        <div className='sellermode-row'>
+          <label htmlFor='inventory'>Inventory <span className="required">*</span></label>
+          <input
+            type='number'
+            id='inventory'
+            value={inventory}
+            onChange={(e) => setInventory(e.target.value)}
+            placeholder='Enter available stock'
+            required
           />
         </div>
         <div className='sellermode-row'>
-          <label htmlFor='price'>Price</label>
+          <label htmlFor='dateAdded'>Date Added</label>
           <input
-            type='number'
-            id='price'
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder='Enter price'
+            type='date'
+            id='dateAdded'
+            value={dateAdded}
+            onChange={(e) => setDateAdded(e.target.value)}
+            required
           />
         </div>
         <button type='submit' className='sellermode-submit-btn'>
           {editIndex !== null ? 'Update Product' : 'Submit Product'}
         </button>
       </form>
-<form>
+
       <div className='sellermode-product-list'>
         <h2>Uploaded Products</h2>
         <table className='sellermode-product-table'>
@@ -105,9 +210,11 @@ const SellerMode = () => {
             <tr>
               <th>Image</th>
               <th>Name</th>
-              <th>Description</th>
+              <th>Short Description</th>
               <th>Price</th>
-              <th>Date Uploaded</th>
+              <th>Currency</th>
+              <th>Inventory</th>
+              <th>Date Added</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -119,7 +226,9 @@ const SellerMode = () => {
                   <td>{product.productName}</td>
                   <td>{product.shortDescription}</td>
                   <td>${product.price}</td>
-                  <td>{product.dateUploaded}</td>
+                  <td>{product.currency}</td>
+                  <td>{product.inventory}</td>
+                  <td>{product.dateAdded}</td>
                   <td>
                     <button onClick={() => handleEditProduct(index)} className='sellermode-edit-btn'>Edit</button>
                     <button onClick={() => handleRemoveProduct(index)} className='sellermode-remove-btn'>Remove</button>
@@ -128,15 +237,13 @@ const SellerMode = () => {
               ))
             ) : (
               <tr>
-                <td colSpan='6'>No products uploaded yet.</td>
+                <td colSpan='8'>No products uploaded yet.</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      </form>
     </div>
-    
   );
 };
 
