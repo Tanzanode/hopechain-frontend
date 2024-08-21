@@ -1,11 +1,9 @@
+# Ignore .dfx and .mops directories in hopechain-engine
+hopechain-engine/.dfx/
+hopechain-engine/.mops/
+
 # Dependency directories
 node_modules/
-
-# Ignore DFX artifacts
-/.dfx
-
-# Ignore Mops packages
-/.mops
 
 # Build directories
 /build
