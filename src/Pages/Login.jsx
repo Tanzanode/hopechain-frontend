@@ -23,16 +23,17 @@ const Login = ({ onLogin }) => {
       try {
         const user = await getUser(name); // Fetch the user from the backend by name
         if (user) { // If user exists
-          onLogin(name);
+          onLogin(name); // Proceed with the login process
           navigate('/'); // Redirect to the home page
         } else {
-          setError(`${name} does not exist! Please sign up first.`);
+          setError(`${name} does not exist! Please sign up first.`); // Display error if user does not exist
         }
       } catch (error) {
-        setError('An error occurred while checking the user.');
+        console.error('An error occurred while checking the user:', error); // Log the error for debugging
+        setError('An error occurred while checking the user. Please try again later.'); // Display a user-friendly error message
       }
     } else {
-      setError('Please enter a valid full name (letters only).');
+      setError('Please enter a valid full name (letters only).'); // Display validation error
     }
   };
 
