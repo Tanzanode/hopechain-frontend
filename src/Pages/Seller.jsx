@@ -35,7 +35,11 @@ const SellerMode = () => {
   }, []);
 
   const handleImageUpload = (event) => {
-    setProductImage(URL.createObjectURL(event.target.files[0]));
+    const data = new FileReader();
+    data.addEventListener('load', () => {
+      setProductImage(data.result)
+    })
+    data.readAsDataURL(event.target.files[0]);
   };
 
   const handleShortDescriptionChange = (event) => {
