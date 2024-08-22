@@ -259,7 +259,7 @@ const SellerMode = () => {
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
                 <td>{product.currency}</td>
-                <td>{product.inventory}</td>
+                <td>{product.inventory.toString()}</td>
                 <td>{product.dateAdded}</td>
                 <td>
                   <button
