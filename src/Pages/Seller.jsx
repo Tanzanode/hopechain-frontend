@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { addProduct } from '../ic/productService';
+import React, { useState, useEffect } from 'react';
+import { addProduct, getProducts } from '../ic/productService';
 import './CSS/Seller.css';
 
 const SellerMode = () => {
@@ -17,8 +17,29 @@ const SellerMode = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Fetch products when the component mounts
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        setErrorMessage('Failed to fetch products. Please try again.');
+      }
+    };
+    fetchProducts();
+  }, []);
+
   const handleImageUpload = (event) => {
-    setProductImage(URL.createObjectURL(event.target.files[0]));
+    const data = new FileReader();
+    data.addEventListener('load', () => {
+      setProductImage(data.result)
+    })
+    data.readAsDataURL(event.target.files[0]);
   };
 
   const handleShortDescriptionChange = (event) => {
@@ -106,6 +127,18 @@ const SellerMode = () => {
     const updatedProducts = products.filter((_, i) => i !== index);
     setProducts(updatedProducts);
   };
+
+  // Calculate products to display based on current page
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Handle pagination controls
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(products.length / itemsPerPage);
 
   return (
     <div className='sellermode'>
@@ -219,29 +252,55 @@ const SellerMode = () => {
             </tr>
           </thead>
           <tbody>
-            {products.length > 0 ? (
-              products.map((product, index) => (
-                <tr key={index}>
-                  <td><img src={product.productImage} alt='Product Thumbnail' className='sellermode-product-thumbnail' /></td>
-                  <td>{product.productName}</td>
-                  <td>{product.shortDescription}</td>
-                  <td>${product.price}</td>
-                  <td>{product.currency}</td>
-                  <td>{product.inventory}</td>
-                  <td>{product.dateAdded}</td>
-                  <td>
-                    <button onClick={() => handleEditProduct(index)} className='sellermode-edit-btn'>Edit</button>
-                    <button onClick={() => handleRemoveProduct(index)} className='sellermode-remove-btn'>Remove</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan='8'>No products uploaded yet.</td>
+            {currentProducts.map((product, index) => (
+              <tr key={index}>
+                <td><img src={product.productImage} alt={product.productName} className='product-image' /></td>
+                <td>{product.productName}</td>
+                <td>{product.shortDescription}</td>
+                <td>{product.price}</td>
+                <td>{product.currency}</td>
+                <td>{product.inventory.toString()}</td>
+                <td>{product.dateAdded}</td>
+                <td>
+                  <button
+                    className='edit-btn'
+                    onClick={() => handleEditProduct(index)}>
+                    Edit
+                  </button>
+                  <button
+                    className='remove-btn'
+                    onClick={() => handleRemoveProduct(index)}>
+                    Remove
+                  </button>
+                </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
+
+        <div className='pagination'>
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </button>
+          {[...Array(totalPages).keys()].map(pageNumber => (
+            <button
+              key={pageNumber}
+              className={currentPage === pageNumber + 1 ? 'active' : ''}
+              onClick={() => handlePageChange(pageNumber + 1)}
+            >
+              {pageNumber + 1}
+            </button>
+          ))}
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

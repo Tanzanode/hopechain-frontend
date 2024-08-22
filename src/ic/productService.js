@@ -29,3 +29,12 @@ export const addProduct = async (product) => {
     throw error;
   }
 };
+
+export const getProducts = async () => {
+  try {
+    return await product_actor.getProducts();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
+  }
+};

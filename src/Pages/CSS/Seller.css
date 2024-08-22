@@ -1,211 +1,190 @@
-/* Basic resets */
-body, h1, h2, h3, p, ul, ol, form, fieldset, legend, input, textarea, select, button {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font-family: inherit;
-  vertical-align: baseline;
+/* Main container for Seller Mode */
+.sellermode {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header styling */
+.sellermode h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+.sellermode-form {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Row styling for form elements */
+.sellermode-form .sellermode-row {
+  margin-bottom: 15px;
+}
+
+/* Inline row styling for form elements */
+.sellermode-form .sellermode-row.inline {
+  display: flex;
+  gap: 10px;
+}
+
+/* Inline item styling within rows */
+.sellermode-form .sellermode-row .inline-item {
+  flex: 1;
+}
+
+/* Label styling */
+.sellermode-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input and textarea styling */
+.sellermode-form input[type="text"],
+.sellermode-form input[type="number"],
+.sellermode-form input[type="date"],
+.sellermode-form select,
+.sellermode-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   box-sizing: border-box;
 }
 
-/* Overall Seller Mode Container */
-.sellermode {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.sellermode h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #333;
-  text-align: center;
-}
-
-/* Form Styles */
-.sellermode-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.sellermode-row {
-  display: flex;
-  flex-direction: column;
-}
-
-.sellermode-row.inline {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.sellermode-row label {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #555;
-}
-
-.sellermode-row .required {
-  color: #e74c3c;
-}
-
-.sellermode-row input[type="text"],
-.sellermode-row input[type="number"],
-.sellermode-row input[type="date"],
-.sellermode-row textarea,
-.sellermode-row select {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
-  transition: border-color 0.3s ease;
-}
-
-.sellermode-row input[type="text"]:focus,
-.sellermode-row input[type="number"]:focus,
-.sellermode-row input[type="date"]:focus,
-.sellermode-row textarea:focus,
-.sellermode-row select:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-.sellermode-row textarea {
+/* Textarea specific styling */
+.sellermode-form textarea {
   resize: vertical;
 }
 
-.sellermode-row small {
-  font-size: 0.875rem;
-  color: #999;
+/* File input styling */
+.sellermode-form input[type="file"] {
+  display: block;
+  margin-bottom: 10px;
 }
 
+/* Image preview styling */
 .sellermode-image-preview {
-  margin-top: 1rem;
-  max-width: 100%;
-  height: auto;
+  max-width: 150px;
+  max-height: 150px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Submit Button */
+/* Submit button styling */
 .sellermode-submit-btn {
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: center;
-  width: fit-content;
-}
-
-.sellermode-submit-btn:hover {
   background-color: #ff4141;
-}
-
-/* Product List Table */
-.sellermode-product-list {
-  margin-top: 2rem;
-}
-
-.sellermode-product-list h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #333;
-  text-align: center;
-}
-
-.sellermode-product-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.sellermode-product-table th, 
-.sellermode-product-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #ddd;
-  font-size: 1rem;
-}
-
-.sellermode-product-table th {
-  background-color: #f4f4f4;
-  color: #555;
-  font-weight: 600;
-}
-
-.sellermode-product-thumbnail {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-/* Action Buttons */
-.sellermode-edit-btn,
-.sellermode-remove-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 
-.sellermode-edit-btn {
-  background-color: #f39c12;
-  color: #fff;
-  margin-right: 0.5rem;
+/* Submit button hover effect */
+.sellermode-submit-btn:hover {
+  background-color: #e63d3d;
 }
 
-.sellermode-edit-btn:hover {
-  background-color: #e67e22;
-}
-
-.sellermode-remove-btn {
-  background-color: #e74c3c;
-  color: #fff;
-}
-
-.sellermode-remove-btn:hover {
-  background-color: #c0392b;
-}
-
+/* Success and error message styling */
 .success-message {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-  border-radius: 0.25rem;
+  color: green;
+  margin-bottom: 20px;
 }
 
 .error-message {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  border-radius: 0.25rem;
+  color: red;
+  margin-bottom: 20px;
 }
 
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .sellermode-row.inline {
-    flex-direction: column;
-  }
+/* Product list container styling */
+.sellermode-product-list {
+  margin-top: 20px;
 }
 
+/* Product table styling */
+.sellermode-product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header and cell styling */
+.sellermode-product-table th,
+.sellermode-product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Table header background color */
+.sellermode-product-table th {
+  background-color: #f4f4f4;
+}
+
+/* Product image styling */
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+/* Pagination container styling */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Pagination button styling */
+.pagination button {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 2px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Active pagination button styling */
+.pagination button.active {
+  background-color: #ff4141;
+  color: white;
+  border-color: #ff4141;
+}
+
+/* Disabled pagination button styling */
+.pagination button:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Edit and Remove button styling */
+.edit-btn,
+.remove-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.remove-btn {
+  background-color: #dc3545;
+}
+
+.remove-btn:hover {
+  background-color: #c82333;
+}
