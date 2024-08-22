@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import './CartItems.css';
+import { deposit } from '../../ic/productService';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
-import { deposit } from '../../ic/productService';
-import Popup from './Popup'; // Import the Popup component
+import './CartItems.css';
+import Popup from './Popup';
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
+  const { getTotalCartAmount, all_product, cartItems, removeFromCart, resetCart } = useContext(ShopContext);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('USD');
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
@@ -34,13 +34,15 @@ const CartItems = () => {
       await deposit(totalCartAmount, selectedPaymentMethod);
       setPopupMessage(`Transaction complete! You’ve donated $${totalFund} to The Charity Group!\nYour support makes a difference. Thank you!`);
       setShowPopup(true);
+      
+      // Reset the cart after a successful purchase
+      resetCart();
     } catch (error) {
       setPopupMessage('There was an issue during the purchase. Please try again.');
       setShowPopup(true);
       console.error('Error during purchase:', error);
     }
   };
-  
 
   const closePopup = () => {
     setShowPopup(false);
@@ -97,7 +99,7 @@ const CartItems = () => {
             </div>
           </div>
           <div className="cartitems-payment-method">
-            <p>Select Payment Method:</p>
+            <p>Choose Payment Currency:</p>
             <select
               value={selectedPaymentMethod}
               onChange={(e) => setSelectedPaymentMethod(e.target.value)}
