@@ -1,14 +1,49 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
+import { deposit } from '../../ic/productService';
+import Popup from './Popup'; // Import the Popup component
 
 const CartItems = () => {
   const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('USD');
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
-  // Function to calculate 10% of the product price
-  const calculateTotalFund = (price) => {
-    return (price * 0.1).toFixed(2);
+  // Function to calculate 10% of the total cart amount
+  const calculateTotalFund = () => {
+    let totalFund = 0;
+    all_product.forEach((product) => {
+      if (cartItems[product.id] > 0) {
+        totalFund += (product.new_price * cartItems[product.id]) * 0.1;
+      }
+    });
+    return totalFund.toFixed(2);
+  };
+
+  const handleProceedToPurchase = async () => {
+    const totalCartAmount = getTotalCartAmount();
+    const totalFund = calculateTotalFund();
+  
+    console.log('Total Cart Amount:', totalCartAmount);
+    console.log('Selected Payment Method:', selectedPaymentMethod);
+  
+    try {
+      // Pass both amount and currency to the deposit function
+      await deposit(totalCartAmount, selectedPaymentMethod);
+      setPopupMessage(`Transaction complete! You’ve donated $${totalFund} to The Charity Group!\nYour support makes a difference. Thank you!`);
+      setShowPopup(true);
+    } catch (error) {
+      setPopupMessage('There was an issue during the purchase. Please try again.');
+      setShowPopup(true);
+      console.error('Error during purchase:', error);
+    }
+  };
+  
+
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -19,7 +54,7 @@ const CartItems = () => {
         <p>Price</p>
         <p>Quantity</p>
         <p>Total</p>
-        <p>Total Fund</p> {/* Added Total Fund Column */}
+        <p>Total Fund</p>
         <p>Remove</p>
       </div>
       <hr />
@@ -33,7 +68,7 @@ const CartItems = () => {
                 <p>${e.new_price}</p>
                 <button className='cartitems-quantity'>{cartItems[e.id]}</button>
                 <p>${(e.new_price * cartItems[e.id]).toFixed(2)}</p>
-                <p>${calculateTotalFund(e.new_price * cartItems[e.id])}</p> {/* Calculated Total Fund */}
+                <p>${(e.new_price * cartItems[e.id] * 0.1).toFixed(2)}</p>
                 <img className='cartitems-remove-icon' src={remove_icon} onClick={() => { removeFromCart(e.id) }} alt="" />
               </div>
               <hr />
@@ -61,18 +96,34 @@ const CartItems = () => {
               <h3>${getTotalCartAmount().toFixed(2)}</h3>
             </div>
           </div>
-          <button>PROCEED TO CHECKOUT</button>
+          <div className="cartitems-payment-method">
+            <p>Select Payment Method:</p>
+            <select
+              value={selectedPaymentMethod}
+              onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+            >
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+              <option value="EUR">Euro</option>
+              <option value="ICP">ICP</option>
+              <option value="ETH">Ether</option>
+              <option value="BTC">Bitcoin</option>
+            </select>
+          </div>
+          <button onClick={handleProceedToPurchase}>PROCEED TO PURCHASE</button>
         </div>
         <div className="cartitems-promocode">
-          <p>If you have a promo code, Enter it here</p>
+          <p>If you have a promo code, enter it here</p>
           <div className="cartitems-promobox">
-            <input type="text" placeholder='promo code' />
+            <input type="text" placeholder='Promo code' />
             <button>Submit</button>
           </div>
         </div>
       </div>
+
+      {showPopup && <Popup message={popupMessage} onClose={closePopup} />}
     </div>
   );
-}
+};
 
 export default CartItems;

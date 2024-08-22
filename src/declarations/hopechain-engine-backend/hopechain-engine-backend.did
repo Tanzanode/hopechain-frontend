@@ -12,7 +12,7 @@ type Product =
  };
 service : {
   addProduct: (text, text, text, float64, text, text, nat, text) -> ();
-  deposit: (float64) -> (float64);
+  deposit: (float64, text) -> (float64);
   getProducts: () -> (vec Product) query;
   getTotalCharityAmount: () -> (float64) query;
   getTotalPrice: () -> (float64) query;

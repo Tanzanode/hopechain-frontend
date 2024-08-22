@@ -30,11 +30,26 @@ export const addProduct = async (product) => {
   }
 };
 
+
 export const getProducts = async () => {
   try {
     return await product_actor.getProducts();
   } catch (error) {
     console.error('Error fetching products:', error);
+    throw error;
+  }
+};
+
+
+export const deposit = async (amount, currency) => {
+  try {
+    console.log("Amount passed to deposit:", parseFloat(amount));
+    console.log("Currency passed to deposit:", currency);
+    
+    const remainingBalance = await product_actor.deposit(parseFloat(amount), currency);
+    return remainingBalance;
+  } catch (error) {
+    console.error('Error during deposit:', error);
     throw error;
   }
 };

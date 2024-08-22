@@ -18,7 +18,7 @@ export interface _SERVICE {
     [string, string, string, number, string, string, bigint, string],
     undefined
   >,
-  'deposit' : ActorMethod<[number], number>,
+  'deposit' : ActorMethod<[number, string], number>,
   'getProducts' : ActorMethod<[], Array<Product>>,
   'getTotalCharityAmount' : ActorMethod<[], number>,
   'getTotalPrice' : ActorMethod<[], number>,
