@@ -60,6 +60,11 @@ const ShopContextProvider = (props) => {
         setCartItems((prev) => ({ ...prev, [itemId]: Math.max(prev[itemId] - 1, 0) }));
     };
 
+    // Reset cart after purchase
+    const resetCart = () => {
+        setCartItems(getDefaultCart());
+    };
+
     // Get total cart amount
     const getTotalCartAmount = () => {
         let totalAmount = 0;
@@ -90,6 +95,7 @@ const ShopContextProvider = (props) => {
         cartItems,
         addToCart,
         removeFromCart,
+        resetCart, // Include resetCart in context
         currency,
         currencySymbol,
         handleCurrencyChange,

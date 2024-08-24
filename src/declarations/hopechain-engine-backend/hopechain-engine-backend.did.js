@@ -25,7 +25,7 @@ export const idlFactory = ({ IDL }) => {
         [],
         [],
       ),
-    'deposit' : IDL.Func([IDL.Float64], [IDL.Float64], []),
+    'deposit' : IDL.Func([IDL.Float64, IDL.Text], [IDL.Float64], []),
     'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
     'getTotalCharityAmount' : IDL.Func([], [IDL.Float64], ['query']),
     'getTotalPrice' : IDL.Func([], [IDL.Float64], ['query']),

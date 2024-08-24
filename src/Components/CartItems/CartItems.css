@@ -95,6 +95,40 @@
     color: white;
     cursor: pointer;
 }
+
+.cartitems-payment-method select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23777" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 50%;
+  }
+  
+  .cartitems-payment-method select:hover {
+    border-color: #aaa;
+  }
+  
+  .cartitems-payment-method select:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+  }
+  
+  .cartitems-payment-method select option {
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+/* Add any additional styling for smaller screens */
 @media(max-width:1280px){
     .cartitems{
         margin: 60px 8%;
@@ -138,6 +172,13 @@
     }
     
 }
+
+@media (max-width: 600px) {
+    .cartitems-payment-method select {
+        font-size: 14px;
+    }
+}
+
 @media(max-width:500px){
     .cartitems-format-main{
        display: none;
