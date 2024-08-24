@@ -17,6 +17,8 @@ const SellerMode = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -34,12 +36,34 @@ const SellerMode = () => {
     fetchProducts();
   }, []);
 
+  // Convert base64 string directly to Uint8Array in the frontend
+  // const base64ToUint8Array = (base64) => {
+  //   const binaryString = window.atob(base64.split(',')[1]);
+  //   const len = binaryString.length;
+  //   const bytes = new Uint8Array(len);
+  //   for (let i = 0; i < len; i++) {
+  //     bytes[i] = binaryString.charCodeAt(i);
+  //   }
+  //   return bytes;
+  // };
+
+  // const handleImageUpload = (event) => {
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setProductImage(base64ToUint8Array(reader.result));
+  //   };
+  //   reader.readAsDataURL(event.target.files[0]);
+  // };
+
   const handleImageUpload = (event) => {
-    const data = new FileReader();
-    data.addEventListener('load', () => {
-      setProductImage(data.result)
-    })
-    data.readAsDataURL(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImage(reader.result);  // Set base64 data URL for preview
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleShortDescriptionChange = (event) => {
@@ -200,7 +224,7 @@ const SellerMode = () => {
           </div>
           <div className='inline-item'>
             <label htmlFor='currency'>Currency</label>
-            <select id='currency' value={currency} onChange={(e) => setCurrency(e.target.value)}>
+            <select id='currency' value={currency} required onChange={(e) => setCurrency(e.target.value)}>
               <option value='ICP'>ICP</option>
               <option value='BTC'>BTC</option>
               <option value='ETH'>ETH</option>
@@ -210,6 +234,7 @@ const SellerMode = () => {
             </select>
           </div>
         </div>
+        
         <div className='sellermode-row'>
           <label htmlFor='inventory'>Inventory <span className="required">*</span></label>
           <input
@@ -221,6 +246,7 @@ const SellerMode = () => {
             required
           />
         </div>
+        
         <div className='sellermode-row'>
           <label htmlFor='dateAdded'>Date Added</label>
           <input
@@ -238,6 +264,8 @@ const SellerMode = () => {
 
       <div className='sellermode-product-list'>
         <h2>Uploaded Products</h2>
+        {successMessage && <div className="success-message">{successMessage}</div>}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <table className='sellermode-product-table'>
           <thead>
             <tr>
@@ -254,7 +282,7 @@ const SellerMode = () => {
           <tbody>
             {currentProducts.map((product, index) => (
               <tr key={index}>
-                <td><img src={product.productImage} alt={product.productName} className='product-image' /></td>
+                <td><img src={product.productImage} alt={product.productName} className='sellermode-table-image' /></td>
                 <td>{product.productName}</td>
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
@@ -262,16 +290,8 @@ const SellerMode = () => {
                 <td>{product.inventory.toString()}</td>
                 <td>{product.dateAdded}</td>
                 <td>
-                  <button
-                    className='edit-btn'
-                    onClick={() => handleEditProduct(index)}>
-                    Edit
-                  </button>
-                  <button
-                    className='remove-btn'
-                    onClick={() => handleRemoveProduct(index)}>
-                    Remove
-                  </button>
+                  <button onClick={() => handleEditProduct(indexOfFirstProduct + index)}>Edit</button>
+                  <button onClick={() => handleRemoveProduct(indexOfFirstProduct + index)}>Remove</button>
                 </td>
               </tr>
             ))}

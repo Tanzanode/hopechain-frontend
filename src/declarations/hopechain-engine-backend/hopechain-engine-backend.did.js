@@ -5,7 +5,7 @@ export const idlFactory = ({ IDL }) => {
     'shortDescription' : IDL.Text,
     'currency' : IDL.Text,
     'price' : IDL.Float64,
-    'productImage' : IDL.Text,
+    'productImage' : IDL.Vec(IDL.Nat8),
     'longDescription' : IDL.Text,
     'dateAdded' : IDL.Text,
   });
@@ -18,7 +18,7 @@ export const idlFactory = ({ IDL }) => {
           IDL.Text,
           IDL.Float64,
           IDL.Text,
-          IDL.Text,
+          IDL.Vec(IDL.Nat8),
           IDL.Nat,
           IDL.Text,
         ],

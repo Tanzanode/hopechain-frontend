@@ -1,17 +1,51 @@
-import React, { useState, useContext } from 'react';
-import { deposit } from '../../ic/productService';
+import React, { useState, useContext, useEffect } from 'react';
+import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
-import './CartItems.css';
-import Popup from './Popup';
+import { deposit, getTotalCharityAmount } from '../../ic/productService';
+import Popup from './Popup'; // Import the Popup component
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, cartItems, removeFromCart, resetCart } = useContext(ShopContext);
+  const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('USD');
+  const [convertedTotal, setConvertedTotal] = useState(0);
+  const [conversionRate, setConversionRate] = useState(1); // Start with 1, which is equivalent to USD
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [charityAmount, setCharityAmount] = useState(0); // Add state for charity amount
 
-  // Function to calculate 10% of the total cart amount
+  // Mock conversion rates (should be updated with real API data)
+  const conversionRates = {
+    USD: 1,       // Base currency
+    GBP: 0.79,    // Example: 1 USD = 0.79 GBP
+    EUR: 0.88,    // Example: 1 USD = 0.88 EUR
+    ICP: 7.14,    // Example: 1 USD = 7.14 ICP
+    ETH: 0.00062, // Example: 1 USD = 0.00062 ETH
+    BTC: 0.000025 // Example: 1 USD = 0.000025 BTC
+  };
+
+  useEffect(() => {
+    const fetchCharityAmount = async () => {
+      try {
+        const amountInIcp = await getTotalCharityAmount();
+        setCharityAmount(amountInIcp);
+      } catch (error) {
+        console.error("Error fetching charity amount:", error);
+      }
+    };
+
+    fetchCharityAmount(); // Fetch the charity amount on component mount
+  }, []);
+
+  // Update the conversion rate and converted total when the payment method or cart amount changes
+  useEffect(() => {
+    const newConversionRate = conversionRates[selectedPaymentMethod] || 1;
+    setConversionRate(newConversionRate);
+
+    const totalInSelectedCurrency = getTotalCartAmount() * newConversionRate;
+    setConvertedTotal(totalInSelectedCurrency);
+  }, [selectedPaymentMethod, getTotalCartAmount]);
+
   const calculateTotalFund = () => {
     let totalFund = 0;
     all_product.forEach((product) => {
@@ -23,20 +57,17 @@ const CartItems = () => {
   };
 
   const handleProceedToPurchase = async () => {
-    const totalCartAmount = getTotalCartAmount();
     const totalFund = calculateTotalFund();
-  
-    console.log('Total Cart Amount:', totalCartAmount);
+
+    console.log('Total Cart Amount:', convertedTotal);
     console.log('Selected Payment Method:', selectedPaymentMethod);
-  
+
     try {
-      // Pass both amount and currency to the deposit function
-      await deposit(totalCartAmount, selectedPaymentMethod);
+      await deposit(convertedTotal, selectedPaymentMethod); 
       setPopupMessage(`Transaction complete! You’ve donated $${totalFund} to The Charity Group!\nYour support makes a difference. Thank you!`);
       setShowPopup(true);
-      
-      // Reset the cart after a successful purchase
-      resetCart();
+      // Reset cart items after purchase
+      Object.keys(cartItems).forEach(productId => removeFromCart(productId));
     } catch (error) {
       setPopupMessage('There was an issue during the purchase. Please try again.');
       setShowPopup(true);
@@ -71,7 +102,7 @@ const CartItems = () => {
                 <button className='cartitems-quantity'>{cartItems[e.id]}</button>
                 <p>${(e.new_price * cartItems[e.id]).toFixed(2)}</p>
                 <p>${(e.new_price * cartItems[e.id] * 0.1).toFixed(2)}</p>
-                <img className='cartitems-remove-icon' src={remove_icon} onClick={() => { removeFromCart(e.id) }} alt="" />
+                <img className='cartitems-remove-icon' src={remove_icon} onClick={() => removeFromCart(e.id)} alt="" />
               </div>
               <hr />
             </div>
@@ -85,7 +116,7 @@ const CartItems = () => {
           <div>
             <div className="cartitems-total-item">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount().toFixed(2)}</p>
+              <p>{convertedTotal.toFixed(2)} {selectedPaymentMethod}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
@@ -95,11 +126,11 @@ const CartItems = () => {
             <hr />
             <div className="cartitems-total-item">
               <h3>Total</h3>
-              <h3>${getTotalCartAmount().toFixed(2)}</h3>
+              <h3>{convertedTotal.toFixed(2)} {selectedPaymentMethod}</h3>
             </div>
           </div>
           <div className="cartitems-payment-method">
-            <p>Choose Payment Currency:</p>
+            <p>Select Payment Method:</p>
             <select
               value={selectedPaymentMethod}
               onChange={(e) => setSelectedPaymentMethod(e.target.value)}
@@ -115,10 +146,13 @@ const CartItems = () => {
           <button onClick={handleProceedToPurchase}>PROCEED TO PURCHASE</button>
         </div>
         <div className="cartitems-promocode">
-          <p>If you have a promo code, enter it here</p>
+          <p>Charity Account Amount ({selectedPaymentMethod})</p>
           <div className="cartitems-promobox">
-            <input type="text" placeholder='Promo code' />
-            <button>Submit</button>
+            <p>
+              {selectedPaymentMethod === "ICP"
+                ? `${charityAmount.toFixed(2)} ICP`
+                : `${(charityAmount / conversionRates["ICP"] * conversionRates[selectedPaymentMethod]).toFixed(2)} ${selectedPaymentMethod}`}
+            </p>
           </div>
         </div>
       </div>
