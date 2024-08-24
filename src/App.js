@@ -50,8 +50,6 @@ function App() {
           isAuthenticated={isAuthenticated} 
           userName={userName} 
           onLogout={handleLogout} 
-          currency={currency} 
-          onCurrencyChange={handleCurrencyChange} 
         />
         <Routes>
           <Route path='/' element={<Shop currency={currency} />} />

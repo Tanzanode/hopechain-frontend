@@ -19,7 +19,7 @@ actor HopeChain {
     longDescription: Text;
     price: Float;
     currency: Text;
-    productImage: Text;
+    productImage: Blob;
     inventory: Nat;
     dateAdded: Text;
   };
@@ -136,9 +136,9 @@ actor HopeChain {
     longDescription: Text,
     price: Float,
     currency: Text,
-    productImage: Text,
+    productImage: Blob,
     inventory: Nat,
-    dateAdded: Text
+    dateAdded: Text,
   ) : async () {
     let newProduct = {
       productName = productName;
@@ -166,3 +166,4 @@ actor HopeChain {
     }) != null
   };
 }
+

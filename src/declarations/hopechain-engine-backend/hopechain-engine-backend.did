@@ -6,12 +6,12 @@ type Product =
    inventory: nat;
    longDescription: text;
    price: float64;
-   productImage: text;
+   productImage: blob;
    productName: text;
    shortDescription: text;
  };
 service : {
-  addProduct: (text, text, text, float64, text, text, nat, text) -> ();
+  addProduct: (text, text, text, float64, text, blob, nat, text) -> ();
   deposit: (float64, text) -> (float64);
   getProducts: () -> (vec Product) query;
   getTotalCharityAmount: () -> (float64) query;

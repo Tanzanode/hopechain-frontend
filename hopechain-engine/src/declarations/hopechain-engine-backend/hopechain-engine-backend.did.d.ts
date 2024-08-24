@@ -8,14 +8,23 @@ export interface Product {
   'shortDescription' : string,
   'currency' : string,
   'price' : number,
-  'productImage' : string,
+  'productImage' : Uint8Array | number[],
   'longDescription' : string,
   'dateAdded' : string,
 }
 export interface User { 'name' : string }
 export interface _SERVICE {
   'addProduct' : ActorMethod<
-    [string, string, string, number, string, string, bigint, string],
+    [
+      string,
+      string,
+      string,
+      number,
+      string,
+      Uint8Array | number[],
+      bigint,
+      string,
+    ],
     undefined
   >,
   'deposit' : ActorMethod<[number, string], number>,

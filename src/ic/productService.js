@@ -14,15 +14,24 @@ const product_actor = Actor.createActor(hopechain_engine_idl, {
 export const addProduct = async (product) => {
   try {
     const { productName, shortDescription, longDescription, price, currency, productImage, inventory, dateAdded } = product;
+    
+    // Convert the productImage (base64) to Blob format before sending it
+    const response = await fetch(productImage);
+    const imageBlob = await response.blob();
+    
+    // Convert Blob to ArrayBuffer and then to Uint8Array
+    const arrayBuffer = await imageBlob.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    
     await product_actor.addProduct(
       productName,
       shortDescription,
       longDescription,
       parseFloat(price),
       currency,
-      productImage,
+      uint8Array,  // Pass Uint8Array instead of Blob
       parseInt(inventory),
-      dateAdded
+      dateAdded,
     );
   } catch (error) {
     console.error('Error adding product:', error);
@@ -40,7 +49,6 @@ export const getProducts = async () => {
   }
 };
 
-
 export const deposit = async (amount, currency) => {
   try {
     console.log("Amount passed to deposit:", parseFloat(amount));
@@ -50,6 +58,18 @@ export const deposit = async (amount, currency) => {
     return remainingBalance;
   } catch (error) {
     console.error('Error during deposit:', error);
+    throw error;
+  }
+};
+
+
+export const getTotalCharityAmount = async () => {
+  try {
+    const totalCharityAmount = await product_actor.getTotalCharityAmount();
+    console.log("Total Charity Amount:", totalCharityAmount);
+    return totalCharityAmount;
+  } catch (error) {
+    console.error('Error fetching total charity amount:', error);
     throw error;
   }
 };
