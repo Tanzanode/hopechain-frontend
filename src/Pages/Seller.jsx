@@ -23,6 +23,17 @@ const SellerMode = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImage(reader.result);  // Set base64 data URL for preview
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // Fetch products when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,36 +46,6 @@ const SellerMode = () => {
     };
     fetchProducts();
   }, []);
-
-  // Convert base64 string directly to Uint8Array in the frontend
-  // const base64ToUint8Array = (base64) => {
-  //   const binaryString = window.atob(base64.split(',')[1]);
-  //   const len = binaryString.length;
-  //   const bytes = new Uint8Array(len);
-  //   for (let i = 0; i < len; i++) {
-  //     bytes[i] = binaryString.charCodeAt(i);
-  //   }
-  //   return bytes;
-  // };
-
-  // const handleImageUpload = (event) => {
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setProductImage(base64ToUint8Array(reader.result));
-  //   };
-  //   reader.readAsDataURL(event.target.files[0]);
-  // };
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProductImage(reader.result);  // Set base64 data URL for preview
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleShortDescriptionChange = (event) => {
     const value = event.target.value;
@@ -282,7 +263,7 @@ const SellerMode = () => {
           <tbody>
             {currentProducts.map((product, index) => (
               <tr key={index}>
-                <td><img src={product.productImage} alt={product.productName} className='sellermode-table-image' /></td>
+                <td><img src={product.productImage} alt={product.productName} style={{ width: '100px', height: '100px' }} className='sellermode-table-image' /></td>
                 <td>{product.productName}</td>
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
