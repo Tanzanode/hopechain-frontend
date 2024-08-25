@@ -51,9 +51,9 @@ const Navbar = ({ isAuthenticated, userName, onLogout, items = [] }) => {
       <img onClick={dropdown_toggle} className='nav-dropdown' src={nav_dropdown} alt="Menu Dropdown" />
       <ul ref={menuRef} className="nav-menu">
         <li onClick={() => { setMenu("shop") }}><Link to='/'>Shop</Link>{menu === "shop" ? <hr /> : null}</li>
-        <li onClick={() => { setMenu("mens") }}><Link to='/mens'>Arts & Designs</Link>{menu === "mens" ? <hr /> : null}</li>
+        <li onClick={() => { setMenu("mens") }}><Link to='/mens'>Designs</Link>{menu === "mens" ? <hr /> : null}</li>
         <li onClick={() => { setMenu("womens") }}><Link to='/womens'>Textiles</Link>{menu === "womens" ? <hr /> : null}</li>
-        <li onClick={() => { setMenu("kids") }}><Link to='/kids'>Kitchenware & Herbs</Link>{menu === "kids" ? <hr /> : null}</li>
+        <li onClick={() => { setMenu("kids") }}><Link to='/kids'>Kitchenware</Link>{menu === "kids" ? <hr /> : null}</li>
       </ul>
 
       <div className="nav-search">
