@@ -42,12 +42,42 @@ export const addProduct = async (product) => {
 
 export const getProducts = async () => {
   try {
-    return await product_actor.getProducts();
+    const products = await product_actor.getProducts();
+
+    // Convert Uint8Array back to a Base64 string for each product's image
+    const productsWithImages = await Promise.all(products.map(async (product) => {
+      const productImageBase64 = await convertUint8ArrayToBase64(product.productImage);
+
+      return {
+        ...product,
+        productImage: productImageBase64
+      };
+    }));
+
+    return productsWithImages;
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;
   }
 };
+
+// Helper function to convert Uint8Array to Base64
+const convertUint8ArrayToBase64 = (uint8Array) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const blob = new Blob([uint8Array], { type: 'image/jpeg' }); // Adjust MIME type based on your image format
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result); // This will be the base64 encoded string
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+
 
 export const deposit = async (amount, currency) => {
   try {
