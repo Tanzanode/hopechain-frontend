@@ -17,8 +17,6 @@ const SellerMode = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-
-
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -133,6 +131,11 @@ const SellerMode = () => {
     setProducts(updatedProducts);
   };
 
+  // Function to check if inventory is low
+  const isLowInventory = (inventory) => {
+    return inventory < 10;
+  };
+
   // Calculate products to display based on current page
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
@@ -215,7 +218,6 @@ const SellerMode = () => {
             </select>
           </div>
         </div>
-        
         <div className='sellermode-row'>
           <label htmlFor='inventory'>Inventory <span className="required">*</span></label>
           <input
@@ -227,7 +229,6 @@ const SellerMode = () => {
             required
           />
         </div>
-        
         <div className='sellermode-row'>
           <label htmlFor='dateAdded'>Date Added</label>
           <input
@@ -263,44 +264,46 @@ const SellerMode = () => {
           <tbody>
             {currentProducts.map((product, index) => (
               <tr key={index}>
-                <td><img src={product.productImage} alt={product.productName} style={{ width: '100px', height: '100px' }} className='sellermode-table-image' /></td>
+                <td><img src={product.productImage} alt={product.productName} className='product-image-thumbnail' /></td>
                 <td>{product.productName}</td>
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
                 <td>{product.currency}</td>
                 <td>
                   {product.inventory.toString()}
-                  {product.inventory < 10 && <span className="alert-circle">!</span>}
+                  {isLowInventory(product.inventory) && (
+                    <span className="low-inventory-alert">!</span>
+                  )}
                 </td>
                 <td>{product.dateAdded}</td>
                 <td>
-                  <button onClick={() => handleEditProduct(indexOfFirstProduct + index)}>Edit</button>
-                  <button onClick={() => handleRemoveProduct(indexOfFirstProduct + index)}>Remove</button>
+                  <button onClick={() => handleEditProduct(index)}>Edit</button>
+                  <button onClick={() => handleRemoveProduct(index)}>Remove</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <div className='pagination'>
+        <div className="pagination">
           <button
-            disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
           >
             Previous
           </button>
           {[...Array(totalPages).keys()].map(pageNumber => (
             <button
-              key={pageNumber}
-              className={currentPage === pageNumber + 1 ? 'active' : ''}
+              key={pageNumber + 1}
               onClick={() => handlePageChange(pageNumber + 1)}
+              className={pageNumber + 1 === currentPage ? 'active' : ''}
             >
               {pageNumber + 1}
             </button>
           ))}
           <button
-            disabled={currentPage === totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
           >
             Next
           </button>

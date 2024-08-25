@@ -128,7 +128,7 @@
 }
 
 /* Product image styling */
-.product-image {
+.product-image-thumbnail {
   width: 50px;
   height: 50px;
   object-fit: cover;
@@ -189,7 +189,8 @@
   background-color: #c82333;
 }
 
-.alert-circle {
+/* Alert circle for low inventory */
+.low-inventory-alert {
   display: inline-block;
   width: 20px;
   height: 20px;
