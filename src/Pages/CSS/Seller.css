@@ -188,3 +188,16 @@
 .remove-btn:hover {
   background-color: #c82333;
 }
+
+.alert-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  margin-left: 10px;
+}

@@ -268,7 +268,10 @@ const SellerMode = () => {
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
                 <td>{product.currency}</td>
-                <td>{product.inventory.toString()}</td>
+                <td>
+                  {product.inventory.toString()}
+                  {product.inventory < 10 && <span className="alert-circle">!</span>}
+                </td>
                 <td>{product.dateAdded}</td>
                 <td>
                   <button onClick={() => handleEditProduct(indexOfFirstProduct + index)}>Edit</button>
