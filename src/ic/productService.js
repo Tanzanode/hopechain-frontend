@@ -13,7 +13,7 @@ const product_actor = Actor.createActor(hopechain_engine_idl, {
 
 export const addProduct = async (product) => {
   try {
-    const { productName, shortDescription, longDescription, price, currency, productImage, inventory, dateAdded } = product;
+    const { sellerName, productName, shortDescription, longDescription, price, currency, category, productImage, inventory, dateAdded } = product;
     
     // Convert the productImage (base64) to Blob format before sending it
     const response = await fetch(productImage);
@@ -24,11 +24,13 @@ export const addProduct = async (product) => {
     const uint8Array = new Uint8Array(arrayBuffer);
     
     await product_actor.addProduct(
+      sellerName,
       productName,
       shortDescription,
       longDescription,
       parseFloat(price),
       currency,
+      category,
       uint8Array,  // Pass Uint8Array instead of Blob
       parseInt(inventory),
       dateAdded,

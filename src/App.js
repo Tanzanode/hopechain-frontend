@@ -9,6 +9,7 @@ import Cart from './Pages/Cart';
 import LoginSignup from './Pages/LoginSignup';
 import Login from './Pages/Login';
 import Seller from './Pages/Seller';
+import SellerProfile from './Pages/SellerProfile';
 import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
@@ -17,7 +18,6 @@ import kid_banner from './Components/Assets/banner_kids.png';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
-  const [currency, setCurrency] = useState('USD'); // Default currency
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -39,10 +39,6 @@ function App() {
     localStorage.removeItem('user');
   };
 
-  const handleCurrencyChange = (e) => {
-    setCurrency(e.target.value);
-  };
-
   return (
     <div>
       <BrowserRouter>
@@ -52,17 +48,18 @@ function App() {
           onLogout={handleLogout} 
         />
         <Routes>
-          <Route path='/' element={<Shop currency={currency} />} />
-          <Route path='/mens' element={<ShopCategory banner={men_banner} category="men" currency={currency} />} />
-          <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" currency={currency} />} />
-          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" currency={currency} />} />
-          <Route path="/product" element={<Product currency={currency} />}>
-            <Route path=':productId' element={<Product currency={currency} />} />
+          <Route path='/' element={<Shop />} />
+          <Route path='/mens' element={<ShopCategory banner={men_banner} category="men" />} />
+          <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" />} />
+          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" />} />
+          <Route path="/product" element={<Product />}>
+            <Route path=':productId' element={<Product />} />
           </Route>
-          <Route path='/cart' element={<Cart currency={currency} />} />
+          <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login onLogin={handleLogin} />} />
           <Route path='/signup' element={<LoginSignup />} />
-          <Route path='/seller' element={<Seller />} />
+          <Route path='/seller' element={<Seller userName={ userName } />} />
+          <Route path='/sellerProfile' element={<SellerProfile userName={ userName } />} />
         </Routes>
         <Footer />
       </BrowserRouter>

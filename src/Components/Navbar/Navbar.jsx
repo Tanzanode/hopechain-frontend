@@ -89,7 +89,7 @@ const Navbar = ({ isAuthenticated, userName, onLogout, items = [] }) => {
                 <div className="user-dropdown">
                   <Link>{userName}</Link>
                   <Link to='/' onClick={() => setUserDropdownVisible(false)}>Buyer Mode</Link>
-                  <Link to='/Seller' onClick={() => setUserDropdownVisible(false)}>Seller Mode</Link>
+                  <Link to='/SellerProfile' onClick={() => setUserDropdownVisible(false)}>Seller Mode</Link>
                   <button onClick={onLogout}>Logout</button>
                 </div>
               )}
