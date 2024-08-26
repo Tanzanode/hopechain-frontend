@@ -155,6 +155,7 @@
 .user-icon-container {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 
 .user-dropdown {
