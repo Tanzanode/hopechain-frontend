@@ -87,7 +87,7 @@ const Navbar = ({ isAuthenticated, userName, onLogout, items = [] }) => {
               <img src={user_icon} alt="User Icon" className="user-icon" />
               {userDropdownVisible && (
                 <div className="user-dropdown">
-                  <Link>{userName}</Link>
+                  <Link to="#">{userName}</Link>
                   <Link to='/' onClick={() => setUserDropdownVisible(false)}>Buyer Mode</Link>
                   <Link to='/SellerProfile' onClick={() => setUserDropdownVisible(false)}>Seller Mode</Link>
                   <button onClick={onLogout}>Logout</button>

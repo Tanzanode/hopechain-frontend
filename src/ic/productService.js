@@ -79,6 +79,28 @@ const convertUint8ArrayToBase64 = (uint8Array) => {
   });
 };
 
+export const getProductsBySeller = async (sellerName) => {
+  try {
+    const products = await product_actor.getProductsBySeller(sellerName);
+
+    // Convert Uint8Array back to a Base64 string for each product's image
+    const productsWithImages = await Promise.all(products.map(async (product) => {
+      const productImageBase64 = await convertUint8ArrayToBase64(product.productImage);
+
+      return {
+        ...product,
+        productImage: productImageBase64,
+      };
+    }));
+
+    return productsWithImages;
+  } catch (error) {
+    console.error('Error fetching products by seller:', error);
+    throw error;
+  }
+};
+
+
 
 
 export const deposit = async (amount, currency) => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CSS/Sellerprofile.css';
 import { Link } from 'react-router-dom'; 
 
-const Sellerprofile = () => {
+const Sellerprofile = ({userName}) => {
   // Sample data for the seller and transactions
   const [seller] = useState({
     name: 'John Doe',
@@ -37,7 +37,7 @@ const Sellerprofile = () => {
     <div className="seller-profile-dashboard">
       {/* Seller Profile Section */}
       <div className="seller-summary">
-        <h2>{seller.name}</h2>
+        <h2>{userName}</h2>
         <p>Total Amount in Account: ${seller.totalAmount.toFixed(2)}</p>
       </div>
 

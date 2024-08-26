@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addProduct, getProducts } from '../ic/productService';
+import { addProduct, getProductsBySeller } from '../ic/productService';
 import './CSS/Seller.css';
 
 const SellerMode = ({ userName }) => {
@@ -33,18 +33,18 @@ const SellerMode = ({ userName }) => {
     }
   };
 
-  // Fetch products when the component mounts
+  // Fetch products by seller when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const fetchedProducts = await getProducts();
+        const fetchedProducts = await getProductsBySeller(userName);
         setProducts(fetchedProducts);
       } catch (error) {
         setErrorMessage('Failed to fetch products. Please try again.');
       }
     };
     fetchProducts();
-  }, []);
+  }, [userName]);
 
   const handleShortDescriptionChange = (event) => {
     const value = event.target.value;
