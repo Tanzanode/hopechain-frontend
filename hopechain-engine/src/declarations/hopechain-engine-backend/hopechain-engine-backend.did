@@ -1,19 +1,30 @@
-type User = record {name: text;};
+type UserID = nat;
+type User = 
+ record {
+   id: UserID;
+   name: text;
+ };
+type ProductID = nat;
 type Product = 
  record {
+   category: text;
    currency: text;
    dateAdded: text;
+   id: ProductID;
    inventory: nat;
    longDescription: text;
    price: float64;
    productImage: blob;
    productName: text;
+   sellerName: text;
    shortDescription: text;
  };
 service : {
-  addProduct: (text, text, text, float64, text, blob, nat, text) -> ();
+  addProduct: (text, text, text, text, float64, text, text, blob, nat,
+   text) -> (ProductID);
   deposit: (float64, text) -> (float64);
   getProducts: () -> (vec Product) query;
+  getProductsBySeller: (text) -> (vec Product) query;
   getTotalCharityAmount: () -> (float64) query;
   getTotalPrice: () -> (float64) query;
   getUser: (text) -> (opt User) query;
