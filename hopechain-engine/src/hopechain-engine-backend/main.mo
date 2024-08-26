@@ -1,40 +1,68 @@
 import Array "mo:base/Array";
 import Float "mo:base/Float";
 import Time "mo:base/Time";
+import Nat "mo:base/Nat";
+import Text "mo:base/Text";
 
 actor HopeChain {
 
   // Mutable state variables
   var totalPrice : Float = 0.0;
   stable var totalCharityAmount : Float = 0.0;
-  stable var startTime : Time.Time = Time.now(); // Initialize startTime
+  stable var startTime : Time.Time = Time.now();
 
+  // Define the UserID, ProductID type as a Nat (natural number)
+  type UserID = Nat;
+  type ProductID = Nat;
+
+  // Define the User type with relevant fields
   type User = {
+    id: UserID;
     name: Text;
   };
 
+  // Define the Product type with relevant fields
   type Product = {
+    id: ProductID;
+    sellerName: Text;
     productName: Text;
     shortDescription: Text;
     longDescription: Text;
     price: Float;
     currency: Text;
+    category: Text;
     productImage: Blob;
     inventory: Nat;
     dateAdded: Text;
   };
 
+  // Stable variables to store list of users & products
   var users: [User] = [];
   var products: [Product] = [];
 
-  // Public functions
+  // Stable variables to generate unique user & product IDs
+  stable var nextUserID: UserID = 0;
+  stable var nextProductID: ProductID = 0;
+
+  // Helper function to check if a user already exists
+  private func userExists(name: Text) : Bool {
+    Array.find<User>(users, func (user: User) : Bool {
+      user.name == name
+    }) != null
+  };
+  
+  // Public functions to register new user
   public func registerUser(name: Text) : async ?User {
     if (userExists(name)) {
       return null; // Return null if user already exists
     };
-    
-    let newUser = { name = name };
+    let userID = nextUserID;
+    let newUser: User = {
+      id = userID;
+      name = name;
+    };
     users := Array.append<User>(users, [newUser]);
+    nextUserID += 1;
     return ?newUser; // Return the new user
   };
 
@@ -131,27 +159,35 @@ actor HopeChain {
 
   // Function to add a product
   public func addProduct(
+    sellerName: Text,
     productName: Text,
     shortDescription: Text,
     longDescription: Text,
     price: Float,
     currency: Text,
+    category: Text,
     productImage: Blob,
     inventory: Nat,
     dateAdded: Text,
-  ) : async () {
-    let newProduct = {
+  ) : async ProductID {
+    let productID = nextProductID;
+    let newProduct: Product = {
+      id = productID;
+      sellerName = sellerName;
       productName = productName;
       shortDescription = shortDescription;
       longDescription = longDescription;
       price = price;
       currency = currency;
+      category = category;
       productImage = productImage;
       inventory = inventory;
       dateAdded = dateAdded;
     };
     
-    products := Array.append<Product>(products, [newProduct]);
+    products := Array.append(products, [newProduct]);
+    nextProductID += 1;
+    return productID;
   };
 
   // Function to get all products
@@ -159,11 +195,13 @@ actor HopeChain {
     return products;
   };
 
-  // Helper function to check if a user already exists
-  private func userExists(name: Text) : Bool {
-    Array.find<User>(users, func (user: User) : Bool {
-      user.name == name
-    }) != null
-  };
+  // Function to get all products by a specific seller
+  public query func getProductsBySeller(sellerName: Text) : async [Product] {
+    let filteredProducts = Array.filter<Product>(products,func (p: Product) : Bool {
+      return p.sellerName == sellerName;
+    });
+    return filteredProducts;
+  }
+
 }
 

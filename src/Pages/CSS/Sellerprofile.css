@@ -1,0 +1,97 @@
+.seller-profile-dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  gap: 50px;
+  margin-top: 50px;
+  
+}
+
+.seller-summary {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 50px;
+
+}
+
+.seller-summary h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.seller-summary p {
+  font-size: 18px;
+  color: #555;
+}
+
+.transactions-section {
+  margin-top: 20px;
+}
+
+.transactions-section h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-table th, .transactions-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.transactions-table th {
+  background: #ff4141;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.transactions-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.transactions-table td {
+  font-size: 16px;
+  color: #333;
+}
+/* SellerProfile.css */
+
+/* Existing styles... */
+
+.add-products-button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-add-product {
+  background-color: #ff4141;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-product:hover {
+  background-color: #ff4141;
+}
+.Transaction {
+  text-align: center;
+}

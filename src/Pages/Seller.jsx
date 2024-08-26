@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { addProduct, getProducts } from '../ic/productService';
 import './CSS/Seller.css';
 
-const SellerMode = () => {
+const SellerMode = ({ userName }) => {
   const [productImage, setProductImage] = useState(null);
   const [productName, setProductName] = useState('');
   const [shortDescription, setShortDescription] = useState('');
   const [longDescription, setLongDescription] = useState('');
   const [price, setPrice] = useState('');
   const [currency, setCurrency] = useState('ICP');
+  const [category, setCategory] = useState('');
   const [inventory, setInventory] = useState('');
   const [dateAdded, setDateAdded] = useState(new Date().toISOString().split('T')[0]); // Default to current date
   const [products, setProducts] = useState([]);
@@ -71,11 +72,13 @@ const SellerMode = () => {
     }
 
     const newProduct = {
+      sellerName: userName,
       productName,
       shortDescription,
       longDescription,
       price,
       currency,
+      category,
       productImage,
       inventory,
       dateAdded,
@@ -102,6 +105,7 @@ const SellerMode = () => {
       setLongDescription('');
       setPrice('');
       setCurrency('ICP');
+      setCategory('DE');
       setInventory('');
       setDateAdded(new Date().toISOString().split('T')[0]);
       setShortDescCharCount(250);
@@ -120,6 +124,7 @@ const SellerMode = () => {
     setLongDescription(productToEdit.longDescription);
     setPrice(productToEdit.price);
     setCurrency(productToEdit.currency);
+    setCurrency(productToEdit.category);
     setProductImage(productToEdit.productImage);
     setInventory(productToEdit.inventory);
     setDateAdded(productToEdit.dateAdded);
@@ -150,7 +155,7 @@ const SellerMode = () => {
 
   return (
     <div className='sellermode'>
-      <h1>Seller Mode</h1>
+      <h2>Register Product</h2>
 
       {successMessage && <div className="success-message">{successMessage}</div>}
       {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -230,6 +235,14 @@ const SellerMode = () => {
           />
         </div>
         <div className='sellermode-row'>
+            <label htmlFor='category'>Category</label>
+            <select id='category' value={category} required onChange={(e) => setCategory(e.target.value)}>
+              <option value='DE'>Designs</option>
+              <option value='TE'>Textiles</option>
+              <option value='KI'>Kitchenware</option>
+            </select>
+          </div>
+        <div className='sellermode-row'>
           <label htmlFor='dateAdded'>Date Added</label>
           <input
             type='date'
@@ -256,6 +269,7 @@ const SellerMode = () => {
               <th>Short Description</th>
               <th>Price</th>
               <th>Currency</th>
+              <th>Category</th>
               <th>Inventory</th>
               <th>Date Added</th>
               <th>Actions</th>
@@ -269,6 +283,7 @@ const SellerMode = () => {
                 <td>{product.shortDescription}</td>
                 <td>{product.price}</td>
                 <td>{product.currency}</td>
+                <td>{product.category}</td>
                 <td>
                   {product.inventory.toString()}
                   {isLowInventory(product.inventory) && (

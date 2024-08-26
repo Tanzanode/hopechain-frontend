@@ -6,20 +6,7 @@ import Item from '../Components/Item/Item';
 
 const ShopCategory = (props) => {
   const { all_product } = useContext(ShopContext);
-
-  const convertPrice = (priceInUSD) => {
-    const rates = {
-      USD: 1,
-      GBP: 0.75,
-      EUR: 0.85,
-      BTC: 0.000021,
-      ETH: 0.00031,
-      ICP: 0.035,
-    };
-
-    return (priceInUSD * rates[props.currency]).toFixed(2);
-  };
-
+  
   return (
     <div className='shop-category'>
       <img className='shopcategory-banner' src={props.banner} alt="" />
@@ -34,7 +21,7 @@ const ShopCategory = (props) => {
       <div className="shopcategory-products">
         {all_product.map((item, i) => {
           if (props.category === item.category) {
-            return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={convertPrice(item.new_price)} old_price={convertPrice(item.old_price)} />;
+            return <Item key={i} id={item.id} name={item.name} image={item.image} />;
           } else {
             return null;
           }
