@@ -33,22 +33,17 @@ export const registerUser = async (name) => {
 
 export const getUser = async (name) => {
   try {
-    // Fetch the user from the Motoko backend using the getUser method
     const user = await hopechain_engine.getUser(name);
 
-    // Debugging line to check the returned value
     console.log('User from getUser:', user); 
 
-    // If the user exists (i.e., the result is not null), return the user object
     if (user) {
       return user;
     } else {
-      // If the user does not exist, return null
       console.log('User does not exist');
       return null;
     }
   } catch (error) {
-    // Log any errors that occur during the process
     console.error('Error checking user:', error);
     throw error;
   }

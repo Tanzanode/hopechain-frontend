@@ -69,6 +69,11 @@
 .cartitems-promocode p{
     color: #555;
 }
+
+.cartitems-promocode span{
+    color: #555;
+    padding-left: 10px;
+}
 .cartitems-promobox{
     display: flex;
     align-items: center;

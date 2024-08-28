@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
-import { Routes, Route, useNavigate } from 'react-router-dom';  // Removed BrowserRouter
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Shop from './Pages/Shop';
 import ShopCategory from './Pages/ShopCategory';
 import Product from './Pages/Product';
@@ -14,6 +14,7 @@ import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
+import { ProductProvider } from './Context/ProductContext';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,32 +39,34 @@ function App() {
     setIsAuthenticated(false);
     setUserName('');
     localStorage.removeItem('user');
-    navigate('/login');
+    navigate('/login'); // Redirect to the login page
   };
 
   return (
-    <div>
-      <Navbar 
-        isAuthenticated={isAuthenticated} 
-        userName={userName} 
-        onLogout={handleLogout} 
-      />
-      <Routes>
-        <Route path='/' element={<Shop />} />
-        <Route path='/mens' element={<ShopCategory banner={men_banner} category="men" />} />
-        <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" />} />
-        <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" />} />
-        <Route path="/product" element={<Product />}>
-          <Route path=':productId' element={<Product />} />
-        </Route>
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/login' element={<Login onLogin={handleLogin} />} />
-        <Route path='/signup' element={<LoginSignup />} />
-        <Route path='/seller' element={<Seller userName={ userName } />} />
-        <Route path='/sellerProfile' element={<SellerProfile userName={ userName } />} />
-      </Routes>
-      <Footer />
-    </div>
+    <ProductProvider>
+      <div>
+        <Navbar
+          isAuthenticated={isAuthenticated}
+          userName={userName}
+          onLogout={handleLogout}
+        />
+        <Routes>
+          <Route path='/' element={<Shop />} />
+          <Route path='/mens' element={<ShopCategory banner={men_banner} category="DE" />} />
+          <Route path='/womens' element={<ShopCategory banner={women_banner} category="TE" />} />
+          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="KI" />} />
+          <Route path="/product" element={<Product />} >
+            <Route path=":productId" element={<Product />} />
+          </Route>  
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/login' element={<Login onLogin={handleLogin} />} />
+          <Route path='/signup' element={<LoginSignup />} />
+          <Route path='/seller' element={<Seller userName={userName} />} />
+          <Route path='/sellerProfile' element={<SellerProfile userName={userName} />} />
+        </Routes>
+        <Footer />
+      </div>
+    </ProductProvider>
   );
 }
 
