@@ -52,9 +52,9 @@ function App() {
         />
         <Routes>
           <Route path='/' element={<Shop />} />
-          <Route path='/mens' element={<ShopCategory banner={men_banner} category="DE" />} />
-          <Route path='/womens' element={<ShopCategory banner={women_banner} category="TE" />} />
-          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="KI" />} />
+          <Route path='/mens' element={<ShopCategory banner={men_banner} category="Designs" />} />
+          <Route path='/womens' element={<ShopCategory banner={women_banner} category="Textiles" />} />
+          <Route path='/kids' element={<ShopCategory banner={kid_banner} category="Kitchenware" />} />
           <Route path="/product/:productId" element={<Product />} /> 
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login onLogin={handleLogin} />} />

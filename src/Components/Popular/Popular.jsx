@@ -16,7 +16,7 @@ const Popular = () => {
 
   // Filter products to only include those with category "TE" and limit to 4 products
   const filteredProducts = allProducts
-    .filter(product => product.category === 'TE')
+    .filter(product => product.category === 'Textiles')
     .slice(0, 4);
 
   return (
