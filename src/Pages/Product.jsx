@@ -8,15 +8,15 @@ import RelatedProducts from '../Components/RelatedProducts/RelatedProducts';
 import './CSS/Product.css';
 
 const Product = () => {
-  const { allProducts } = useContext(ShopContext); // Align with context value
-  const { id } = useParams();
+  const { allProducts } = useContext(ShopContext); // Get products from context
+  const { productId } = useParams(); // Correctly retrieve productId from URL
 
-  // Check if allProducts is defined and find the product
   if (!allProducts) {
-    return <div>Loading...</div>; // Optionally handle loading state
+    return <div>Loading...</div>; // Handle loading state
   }
 
-  const product = allProducts.find((e) => e.id === Number(id));
+  // Ensure consistent type comparison (string vs. number)
+  const product = allProducts.find((e) => e.id === productId || e.id === Number(productId));
 
   if (!product) {
     return <div className='product-not-found'>Product not found</div>;
@@ -26,7 +26,7 @@ const Product = () => {
     <div>
       <Breadcrum product={product} />
       <ProductDisplay product={product} />
-      <DescriptionBox />
+      <DescriptionBox product={product} />
       <RelatedProducts productId={product.id} />
     </div>
   );

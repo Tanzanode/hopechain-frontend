@@ -1,0 +1,23 @@
+{
+  "canisters": {
+    "hopechain-engine-backend": {
+      "main": "hopechain-engine/src/hopechain-engine-backend/main.mo",
+      "type": "motoko"
+    },
+    "hopechain-frontend": {
+      "type": "assets",
+      "source": [
+        "build"
+      ],
+      "dependencies": []
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "mops sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
