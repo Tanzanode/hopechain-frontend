@@ -38,35 +38,22 @@ const ProductDisplay = ({ product }) => {
         <div className="productdisplay-right-prices">
           {oldPrice && (
             <div className="productdisplay-right-price-old">
-              ${oldPrice}
+              {oldPrice}
             </div>
           )}
           <div className="productdisplay-right-price-new">
-            ${price}
+            {product.currency} {price}
           </div>
         </div>
         <div className="productdisplay-right-description">
-          {product.longDescription}
+          {product.shortDescription}
         </div>
         <div className="productdisplay-right-details">
-          <p><span>Inventory:</span> {product.inventory}</p>
-          <p><span>Date Added:</span> {product.dateAdded}</p>
           <p><span>Seller:</span> {product.sellerName}</p>
         </div>
-        <div className="productdisplay-right-size">
-          <h1>Select Size</h1>
-          <div className="productdisplay-right-sizes">
-            {/* Placeholder sizes; could be dynamic based on product data */}
-            <div>S</div>
-            <div>M</div>
-            <div>L</div>
-            <div>XL</div>
-            <div>XXL</div>
-          </div>
-        </div>
-        <button onClick={() => addToCart(product.id)}>ADD TO CART</button>
-        <p className='productdisplay-right-category'><span>Category :</span> {product.category}</p>
         <p className='productdisplay-right-category'><span>Tags :</span> Modern, Latest</p>
+        <p className='productdisplay-right-category'><span>Category :</span> {product.category}</p>
+        <button onClick={() => addToCart(product.id)}>ADD TO CART</button>
       </div>
     </div>
   );

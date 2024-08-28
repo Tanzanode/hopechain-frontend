@@ -9,7 +9,7 @@ const SellerMode = ({ userName }) => {
   const [longDescription, setLongDescription] = useState('');
   const [price, setPrice] = useState('');
   const [currency, setCurrency] = useState('ICP');
-  const [category, setCategory] = useState('DE');
+  const [category, setCategory] = useState('Designs');
   const [inventory, setInventory] = useState('');
   const [dateAdded, setDateAdded] = useState(new Date().toISOString().split('T')[0]); // Default to current date
   const [products, setProducts] = useState([]);
@@ -105,7 +105,7 @@ const SellerMode = ({ userName }) => {
       setLongDescription('');
       setPrice('');
       setCurrency('ICP');
-      setCategory('DE');
+      setCategory('Designs');
       setInventory('');
       setDateAdded(new Date().toISOString().split('T')[0]);
       setShortDescCharCount(250);
@@ -237,9 +237,9 @@ const SellerMode = ({ userName }) => {
         <div className='sellermode-row'>
             <label htmlFor='category'>Category</label>
             <select id='category' value={category} required onChange={(e) => setCategory(e.target.value)}>
-              <option value='DE'>Designs</option>
-              <option value='TE'>Textiles</option>
-              <option value='KI'>Kitchenware</option>
+              <option value='Designs'>Designs</option>
+              <option value='Textiles'>Textiles</option>
+              <option value='Kitchenware'>Kitchenware</option>
             </select>
           </div>
         <div className='sellermode-row'>

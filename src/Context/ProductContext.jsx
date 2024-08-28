@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getProducts } from '../ic/productService';
 
-export const ProductContext = createContext();
+export const ProductContext = createContext(null);
 
 export const ProductProvider = ({ children }) => {
   const [allProducts, setAllProducts] = useState([]);

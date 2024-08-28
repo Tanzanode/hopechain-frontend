@@ -6,8 +6,8 @@ export const ShopContext = createContext(null);
 
 const getDefaultCart = (allProducts) => {
     let cart = {};
-    for (let index = 0; index < allProducts.length + 1; index++) {
-        cart[index] = 0;
+    for (let index = 0; index < allProducts.length; index++) {
+        cart[allProducts[index].id] = 0; // Use product ID to index cart
     }
     return cart;
 };
@@ -23,15 +23,13 @@ const conversionRates = {
 };
 
 const ShopContextProvider = (props) => {
-    const { allProducts } = useContext(ProductContext); // Access allProducts from ProductContext
-    const [cartItems, setCartItems] = useState({});
+    const { allProducts = [] } = useContext(ProductContext); // Default to empty array
+    const [cartItems, setCartItems] = useState(getDefaultCart(allProducts));
     const [currency, setCurrency] = useState('USD');
     const [currencySymbol, setCurrencySymbol] = useState('$');
 
     useEffect(() => {
-        if (allProducts) {
-            setCartItems(getDefaultCart(allProducts));
-        }
+        setCartItems(getDefaultCart(allProducts));
     }, [allProducts]);
 
     // Currency Symbols Map
@@ -59,12 +57,12 @@ const ShopContextProvider = (props) => {
 
     // Add item to cart
     const addToCart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+        setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
     };
 
     // Remove item from cart
     const removeFromCart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: Math.max(prev[itemId] - 1, 0) }));
+        setCartItems((prev) => ({ ...prev, [itemId]: Math.max((prev[itemId] || 0) - 1, 0) }));
     };
 
     // Reset cart after purchase
@@ -78,7 +76,9 @@ const ShopContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let itemInfo = allProducts.find((product) => product.id === Number(item));
-                totalAmount += cartItems[item] * convertPrice(itemInfo.new_price, currency);
+                if (itemInfo && itemInfo.price) {
+                    totalAmount += cartItems[item] * convertPrice(itemInfo.price, currency);
+                }
             }
         }
         return totalAmount;
@@ -86,13 +86,7 @@ const ShopContextProvider = (props) => {
 
     // Get total cart items
     const getTotalCartItems = () => {
-        let totalItem = 0;
-        for (const item in cartItems) {
-            if (cartItems[item] > 0) {
-                totalItem += cartItems[item];
-            }
-        }
-        return totalItem;
+        return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
     };
 
     const contextValue = {
@@ -108,10 +102,6 @@ const ShopContextProvider = (props) => {
         handleCurrencyChange,
         convertPrice,
     };
-
-    if (!allProducts) {
-        return <div>Loading...</div>; // Optionally handle loading state
-    }
 
     return (
         <ShopContext.Provider value={contextValue}>
