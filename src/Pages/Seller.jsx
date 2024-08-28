@@ -9,7 +9,7 @@ const SellerMode = ({ userName }) => {
   const [longDescription, setLongDescription] = useState('');
   const [price, setPrice] = useState('');
   const [currency, setCurrency] = useState('ICP');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('DE');
   const [inventory, setInventory] = useState('');
   const [dateAdded, setDateAdded] = useState(new Date().toISOString().split('T')[0]); // Default to current date
   const [products, setProducts] = useState([]);

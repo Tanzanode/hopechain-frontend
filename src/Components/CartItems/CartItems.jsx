@@ -3,13 +3,12 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import { deposit, getTotalCharityAmount } from '../../ic/productService';
-import Popup from './Popup'; // Import the Popup component
+import Popup from './Popup'; 
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
+  const { getTotalCartAmount, allProducts, cartItems, removeFromCart } = useContext(ShopContext);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('USD');
   const [convertedTotal, setConvertedTotal] = useState(0);
-  const [conversionRate, setConversionRate] = useState(1); // Start with 1, which is equivalent to USD
   const [popupMessage, setPopupMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [charityAmount, setCharityAmount] = useState(0); // Add state for charity amount
@@ -37,18 +36,24 @@ const CartItems = () => {
     fetchCharityAmount(); // Fetch the charity amount on component mount
   }, []);
 
-  // Update the conversion rate and converted total when the payment method or cart amount changes
+  // Update the converted total when the payment method or cart amount changes
   useEffect(() => {
     const newConversionRate = conversionRates[selectedPaymentMethod] || 1;
-    setConversionRate(newConversionRate);
 
     const totalInSelectedCurrency = getTotalCartAmount() * newConversionRate;
     setConvertedTotal(totalInSelectedCurrency);
+
+    // Disable exhaustive-deps warning for `conversionRates`
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPaymentMethod, getTotalCartAmount]);
+
+  if (!allProducts) {
+    return <div>Loading products...</div>; // Handle loading state
+  }
 
   const calculateTotalFund = () => {
     let totalFund = 0;
-    all_product.forEach((product) => {
+    allProducts.forEach((product) => {
       if (cartItems[product.id] > 0) {
         totalFund += (product.new_price * cartItems[product.id]) * 0.1;
       }
@@ -91,7 +96,7 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
+      {allProducts.map((e) => {
         if (cartItems[e.id] > 0) {
           return (
             <div key={e.id}>

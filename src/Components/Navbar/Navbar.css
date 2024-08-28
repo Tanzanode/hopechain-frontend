@@ -171,6 +171,7 @@
     white-space: nowrap; /* Prevents text wrapping */
 }
 
+
 /* Show the dropdown when hovering over the user icon container */
 .user-icon-container:hover .user-dropdown {
     display: block;
@@ -198,20 +199,29 @@
     cursor: pointer; 
 }
 
-.user-dropdown button:hover {
-    background-color: #f1f1f1;
-    color: #000;
+.user-dropdown button {
+    width: 100%; /* Full width for better alignment */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF4141; /* Primary color for logout */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .user-dropdown button:hover {
-    background-color: #f1f1f1;
-    color: #000;
+    background-color: #e03e3e; /* Slightly darker shade on hover */
+    color: #f1f1f1;
 }
 
 .user-dropdown button:focus {
-    outline: 2px solid #FF4141; 
+    outline: 2px solid #FF4141; /* Outline color for accessibility */
     outline-offset: 2px;
 }
+
 
 /* Search Bar */
 .nav-search {

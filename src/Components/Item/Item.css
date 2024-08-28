@@ -1,6 +1,10 @@
 .item{
     width: 21%;
 }
+.item-name {
+    font-weight: bold;
+    font-size: 18px; /* Adjust as needed */
+}
 .item img{
     width: 100%;
 }
@@ -9,12 +13,14 @@
 }
 .item-prices{
     display: flex;
+    flex-direction: column;
     gap: 15px;
+    font-weight: bold;
 }
 .item-price-new{
     color: #374151;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: bold;
 }
 .item-price-old{
     color: #8c8c8c;
