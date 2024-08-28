@@ -1,8 +1,15 @@
 {
   "canisters": {
     "hopechain-engine-backend": {
-      "main": "src/hopechain-engine-backend/main.mo",
+      "main": "hopechain-engine/src/hopechain-engine-backend/main.mo",
       "type": "motoko"
+    },
+    "hopechain-frontend": {
+      "type": "assets",
+      "source": [
+        "build"
+      ],
+      "dependencies": []
     }
   },
   "defaults": {

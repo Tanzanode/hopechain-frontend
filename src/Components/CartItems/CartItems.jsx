@@ -153,11 +153,11 @@ const CartItems = () => {
         <div className="cartitems-promocode">
           <p>Charity Account Amount ({selectedPaymentMethod})</p>
           <div className="cartitems-promobox">
-            <p>
+            <span>
               {selectedPaymentMethod === "ICP"
                 ? `${charityAmount.toFixed(2)} ICP`
                 : `${(charityAmount / conversionRates["ICP"] * conversionRates[selectedPaymentMethod]).toFixed(2)} ${selectedPaymentMethod}`}
-            </p>
+            </span>
           </div>
         </div>
       </div>

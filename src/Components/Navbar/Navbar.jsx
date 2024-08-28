@@ -34,9 +34,9 @@ const Navbar = ({ isAuthenticated, userName, onLogout, items = [] }) => {
     }
 
     const results = items.filter(item => 
-        item.name.toLowerCase().includes(query.toLowerCase()) || 
-        item.keywords.some(keyword => keyword.toLowerCase().includes(query.toLowerCase())) ||
-        item.category.toLowerCase().includes(query.toLowerCase())
+        item.productName.toLowerCase().includes(query.toLowerCase()) || 
+        item.category.toLowerCase().includes(query.toLowerCase()) ||
+        item.shortDescription.toLowerCase().includes(query.toLowerCase())
     );
 
     setSearchResults(results);
@@ -68,8 +68,8 @@ const Navbar = ({ isAuthenticated, userName, onLogout, items = [] }) => {
             {searchResults.map(result => (
               <div key={result.id} className="search-item">
                 <Link to={`/product/${result.id}`} onClick={() => setSearchQuery('')}>
-                  <img src={result.image} alt={result.name} />
-                  <div>{result.name}</div>
+                  <img src={result.image} alt={result.productName} />
+                  <div>{result.productName}</div>
                   <div>{result.category}</div>
                 </Link>
               </div>
