@@ -23,6 +23,8 @@
     "@babel/preset-env": "^7.25.4"
   },
   "scripts": {
+    "prepare-frontend": "cp -r build/* dfx_assets/",
+    "deploy-frontend": "dfx deploy --network ic",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",

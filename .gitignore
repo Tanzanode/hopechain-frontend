@@ -6,6 +6,12 @@ hopechain-engine/.mops/
 .mops/
 .github/
 
+dfx_assets/
+build/
+
+canister_ids.json
+
+
 # Dependency directories
 node_modules/
 
