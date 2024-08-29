@@ -1,0 +1,81 @@
+.charity-profile {
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.charity-header {
+  margin-bottom: 20px;
+}
+
+.charity-title {
+  font-size: 32px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.charity-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.charity-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.total-amount {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.total-amount span {
+  color: #27ae60;
+}
+
+.donations-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.donations-table th,
+.donations-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 2px solid #eee;
+  
+}
+
+.donations-table th {
+  background-color: #ff4141;
+  font-size: 18px;
+  color:white;
+}
+
+.donations-table td {
+  font-size: 16px;
+  color: #555;
+}
+
+.donations-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.donations-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.donations-table tr:last-child td {
+  border-bottom: none;
+}

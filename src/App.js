@@ -14,6 +14,8 @@ import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png';
 import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
+import CharityProfile from './Pages/CharityProfile';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
 import { ProductProvider } from './Context/ProductContext';
 
 function App() {
@@ -56,6 +58,8 @@ function App() {
           <Route path='/womens' element={<ShopCategory banner={women_banner} category="Textiles" />} />
           <Route path='/kids' element={<ShopCategory banner={kid_banner} category="Kitchenware" />} />
           <Route path="/product/:productId" element={<Product />} /> 
+          <Route path="/charity" element={<CharityProfile />} /> 
+          <Route path="/privacyPolicy" element={<PrivacyPolicy />} /> 
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login onLogin={handleLogin} />} />
           <Route path='/signup' element={<LoginSignup />} />
