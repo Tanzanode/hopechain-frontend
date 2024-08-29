@@ -162,14 +162,14 @@ const CartItems = () => {
             <button onClick={handleProceedToPurchase}>PROCEED TO PURCHASE</button>
           </div>
           <div className="cartitems-promocode">
-            <p>Charity Account Amount ({selectedPaymentMethod})</p>
+            {/* <p>Charity Account Amount ({selectedPaymentMethod})</p>
             <div className="cartitems-promobox">
               <span>
                 {selectedPaymentMethod === "ICP"
                   ? `${charityAmount.toFixed(2)} ICP`
                   : `${(charityAmount / conversionRates["ICP"] * conversionRates[selectedPaymentMethod]).toFixed(2)} ${selectedPaymentMethod}`}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

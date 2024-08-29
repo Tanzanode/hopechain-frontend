@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CSS/Sellerprofile.css';
 import { Link } from 'react-router-dom'; 
+import { getTotalPrice } from '../ic/productService';
 
-const Sellerprofile = ({userName}) => {
-  // Sample data for the seller and transactions
-  const [seller] = useState({
-    name: 'John Doe',
-    totalAmount: 1200,
-  });
-
+const Sellerprofile = ({ userName }) => {
+  const [totalAmount, setTotalAmount] = useState(0);
   const [transactions] = useState([
     {
       id: 1,
@@ -33,18 +29,31 @@ const Sellerprofile = ({userName}) => {
     },
   ]);
 
+  useEffect(() => {
+    const fetchTotalAmount = async () => {
+      try {
+        const totalPrice = await getTotalPrice();
+        setTotalAmount(totalPrice);
+      } catch (error) {
+        console.error('Failed to fetch total amount:', error);
+      }
+    };
+
+    fetchTotalAmount();
+  }, []);
+
   return (
     <div className="seller-profile-dashboard">
       {/* Seller Profile Section */}
       <div className="seller-summary">
         <h2>{userName}</h2>
-        <p>Total Amount in Account: ${seller.totalAmount.toFixed(2)}</p>
+        <p>Total Amount in Account: {totalAmount.toFixed(2)} ICP</p>
       </div>
 
       {/* Transactions Table */}
       <div className="transactions-section">
         <div className="Transaction">
-        <h3>Transaction Details</h3>
+          <h3>Transaction Details</h3>
         </div>
         <table className="transactions-table">
           <thead>

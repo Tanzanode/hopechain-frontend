@@ -127,3 +127,14 @@ export const getTotalCharityAmount = async () => {
     throw error;
   }
 };
+
+export const getTotalPrice = async () => {
+  try {
+    const totalPrice = await product_actor.getTotalPrice();
+    console.log("Total Price:", totalPrice);
+    return totalPrice;
+  } catch (error) {
+    console.error('Error fetching total price:', error);
+    throw error;
+  }
+};
