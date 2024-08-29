@@ -3,6 +3,8 @@ hopechain-engine/.dfx/
 hopechain-engine/.mops/
 
 .dfx/
+.mops/
+.github/
 
 # Dependency directories
 node_modules/

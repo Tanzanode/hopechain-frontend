@@ -4,6 +4,7 @@ import footer_logo from '../Assets/logo_big.png'
 import instagram_icon from '../Assets/instagram_icon.png'
 import pintester_icon from '../Assets/pintester_icon.png'
 import whatsapp_icon from '../Assets/whatsapp_icon.png'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -15,7 +16,9 @@ const Footer = () => {
       <ul className="footer-links">
         <li>Company</li>
         <li>Products</li>
-        <li>Offices</li>
+        <li>
+          <Link to="/charity">Donations</Link>
+        </li>
         <li>About</li>
         <li>Contact</li>
       </ul>

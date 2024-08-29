@@ -78,7 +78,8 @@ const LoginSignup = () => {
             id=''
             onChange={handleCheckboxChange}
           />
-          <p>By continuing, I agree to the terms of use & privacy policy.</p>
+          By continuing, I agree to the terms of use & 
+          <Link to="/PrivacyPolicy" style={{ textDecoration: 'underline' }}>Privacy Policy. </Link>
         </div>
       </div>
     </div>

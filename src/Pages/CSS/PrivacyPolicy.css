@@ -1,0 +1,83 @@
+/* Base styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.privacy-policy {
+  width: 80%;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h5 {
+  font-size: 1.75rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #ff4141;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 5px;
+}
+
+/* Section styles */
+section {
+  margin-bottom: 30px;
+}
+
+/* Paragraph styles */
+p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Link styles */
+a {
+ 
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  
+}
+
+/* Button and input styles */
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .privacy-policy {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
