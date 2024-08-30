@@ -1,5 +1,5 @@
 # HopeChain-Frontend
-This is the front end developed in React framework and will be connected with motoko backend (IC).
+This project aimed at leveraging the transparency and security of blockchain technology to support social groups such as drug addicts, children and other charitable organizations.The frontend is developed in React framework and connected with motoko backend (IC).
 
 ## Table of Contents
 - Prerequisites
@@ -8,16 +8,26 @@ This is the front end developed in React framework and will be connected with mo
 - Environment Variables
 
 ## Prerequisites
+To learn more before you start working with `hopechain-engine`, see the following documentation available online:
+
+- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
+- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
+- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
+- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+
 Before you begin, ensure you have the following installed on your local machine:
 - Node.js (version 14.x or higher)
 - npm (Node Package Manager) or yarn
 - CRACO (Create React App Configuration Override)
+- IC-SDK
  
  ```bash
-# You can verify if Node.js and npm are installed by running
+# You can verify if IC-SDK(dfx), Node.js and npm are installed by running
 node -v
 
 npm -v
+
+dfx -V
 ```
 ## Installation
 
@@ -39,21 +49,43 @@ Or if you're using yarn:
 ```bash
 yarn install
 ```
+
+For this project please also install mops
+
+```bash
+npm i -g ic-mops
+```
+
 ## Running the App
 
 To start the development server and run the app locally:
 
-1. Start the React app using CRACO:
+1. Start the dApp:
 
-If you're using npm:
+```bash
+# Starts the replica, running in the background
+dfx start --clean --background
+
+# Deploys your canisters to the replica and generates your candid interface
+dfx deploy
+```
+Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+
+If you have made changes to your backend canister, you can generate a new candid interface with
+
+```bash
+npm run generate
+```
+
+at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+
+If you are making frontend changes, you can start a development server with
+
 ```bash
 npm start
 ```
 
-Or if you're using yarn:
-```bash
-yarn start
-```
+Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
 
 ## Environment Variables
 
